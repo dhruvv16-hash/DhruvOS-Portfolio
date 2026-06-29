@@ -1,0 +1,28 @@
+# Dhruv Mayur Vira | Portfolio
+
+Dhruv Mayur Vira is a Computer Science undergraduate at Vellore Institute of Technology, Chennai. He specializes in backend development, algorithm design, and full-stack engineering, with experience in open-source software and algorithmic trading strategy development.
+
+## Information
+- Email: [dhruvvira17@gmail.com](mailto:dhruvvira17@gmail.com)
+- Phone: +91 9303000832
+- GitHub: [dhruvv16-hash](https://github.com/dhruvv16-hash)
+- LinkedIn: [dhruv-mayur-vira-5428b031b](https://www.linkedin.com/in/dhruv-mayur-vira-5428b031b)
+- Location: Madhya Pradesh, India
+
+## Open Source Experience
+- **omegaUp Contributor (2026)**: Fixed stale-state bugs with Vue 3 reactive states, built debounced problems search filters, resolved API response race conditions with cancellation patterns, and authored GSoC 2026 testing proposals using Jest & Cypress.
+
+## Projects
+- **Algorithmic Trading Strategy — ETH/USD**: Pine Script strategy indicator incorporating UT Bot Alerts, Linear Regression, and ADX filters with a live HTML market dashboard. [GitHub Code](https://github.com/dhruvv16-hash/DeltaBridge)
+- **AI Email Writer — Chrome Extension**: Gmail extension to generate real-time tone-aware AI replies using Google Gemini API and Spring Boot. [GitHub Code](https://github.com/dhruvv16-hash/EMAIL_WRITER-AI)
+- **Movie Recommendation System**: Content-based recommendation system using TF-IDF vectorization and cosine similarity, built using Python and Streamlit. [GitHub Code](https://github.com/dhruvv16-hash/Movie-Recommondation)
+- **Library Management System**: Object-oriented system in C++ with file handling and data persistence. [GitHub Code](https://github.com/dhruvv16-hash)
+- **Password Strength Checker**: Validation tool utilizing entropy calculation, rules, and Python regex. [GitHub Code](https://github.com/dhruvv16-hash)
+
+## Skills
+- Languages: Java, Python, C++, C, TypeScript
+- Fundamentals: DSA, OOP, Operating Systems, COA, Problem Solving
+- Backend: REST APIs, API Integration, Webhooks, Spring Boot, JDBC, JPA
+- Frontend & Testing: HTML, CSS, JavaScript, Vue.js, React.js, Jest, Cypress
+- Databases & Tools: SQL, MySQL, Git, GitHub, Docker
+- Finance & AI/ML: Machine Learning, NumPy, Pandas, Scikit-learn, Financial Modelling, Algorithmic Trading
