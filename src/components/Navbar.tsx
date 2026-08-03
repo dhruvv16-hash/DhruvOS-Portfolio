@@ -51,7 +51,16 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-xs font-mono text-zinc-400 hover:text-white transition-colors duration-200"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const targetId = item.href.replace('#', '')
+                    const el = document.getElementById(targetId)
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' })
+                      window.history.pushState(null, '', item.href)
+                    }
+                  }}
+                  className="text-xs font-mono text-zinc-400 hover:text-white transition-colors duration-200 cursor-pointer"
                 >
                   {item.name}
                 </a>
@@ -119,8 +128,17 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-xl font-mono text-zinc-300 hover:text-red-500 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setIsMobileMenuOpen(false)
+                    const targetId = item.href.replace('#', '')
+                    const el = document.getElementById(targetId)
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' })
+                      window.history.pushState(null, '', item.href)
+                    }
+                  }}
+                  className="text-xl font-mono text-zinc-300 hover:text-red-500 transition-colors cursor-pointer"
                 >
                   {item.name}
                 </motion.a>

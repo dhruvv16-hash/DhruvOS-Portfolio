@@ -55,15 +55,39 @@ export function Contact({ onFormSubmitted }: ContactProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simulate pipeline encryption transmission
-    await new Promise((resolve) => setTimeout(resolve, 1200))
-    
-    setIsSubmitting(false)
-    setFormData({ name: '', email: '', message: '' })
-    setStep(1)
-    toast.success('Secure briefing dispatched successfully!')
-    onFormSubmitted() // Telemetry trigger
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/dhruvvira17@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Briefing Packet from ${formData.name}`,
+          _captcha: "false"
+        })
+      })
+
+      if (response.ok) {
+        toast.success('Secure briefing dispatched to dhruvvira17@gmail.com!')
+      } else {
+        window.location.href = `mailto:dhruvvira17@gmail.com?subject=Briefing%20from%20${encodeURIComponent(formData.name)}&body=Name:%20${encodeURIComponent(formData.name)}%0AEmail:%20${encodeURIComponent(formData.email)}%0A%0AMessage:%0A${encodeURIComponent(formData.message)}`
+        toast.info('Opened mail client to dispatch briefing.')
+      }
+    } catch (error) {
+      console.error('Email submission error:', error)
+      window.location.href = `mailto:dhruvvira17@gmail.com?subject=Briefing%20from%20${encodeURIComponent(formData.name)}&body=Name:%20${encodeURIComponent(formData.name)}%0AEmail:%20${encodeURIComponent(formData.email)}%0A%0AMessage:%0A${encodeURIComponent(formData.message)}`
+      toast.info('Opened mail client to dispatch briefing.')
+    } finally {
+      setIsSubmitting(false)
+      setFormData({ name: '', email: '', message: '' })
+      setStep(1)
+      onFormSubmitted()
+    }
   }
 
   const contactInfo = [

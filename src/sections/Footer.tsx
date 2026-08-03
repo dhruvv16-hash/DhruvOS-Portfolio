@@ -27,7 +27,21 @@ export function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-red-500 transition-colors">{link.name}</a>
+                  <a 
+                    href={link.href} 
+                    onClick={(e) => {
+                      e.preventDefault()
+                      const targetId = link.href.replace('#', '')
+                      const el = document.getElementById(targetId)
+                      if (el) {
+                        el.scrollIntoView({ behavior: 'smooth' })
+                        window.history.pushState(null, '', link.href)
+                      }
+                    }}
+                    className="text-sm text-muted-foreground hover:text-red-500 transition-colors cursor-pointer"
+                  >
+                    {link.name}
+                  </a>
                 </li>
               ))}
             </ul>

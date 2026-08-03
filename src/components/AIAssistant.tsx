@@ -38,7 +38,9 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
   ]
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 2) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }, [messages, isTyping])
 
   const handleSend = (text: string) => {

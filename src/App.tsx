@@ -193,6 +193,41 @@ function App() {
     printWindow.document.close()
   }
 
+  // Ensure page starts at the very top (Hero section) on load / after boot sequence
+  useEffect(() => {
+    if (!booting) {
+      if (typeof window !== 'undefined') {
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual'
+        }
+
+        // Clear any auto-scrolling hash from URL on initial landing
+        if (window.location.hash) {
+          window.history.replaceState(null, '', window.location.pathname)
+        }
+
+        const startTime = performance.now()
+        let frameId: number
+
+        const lockTop = () => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          document.documentElement.scrollTop = 0
+          document.body.scrollTop = 0
+
+          if (performance.now() - startTime < 600) {
+            frameId = requestAnimationFrame(lockTop)
+          }
+        }
+
+        frameId = requestAnimationFrame(lockTop)
+
+        return () => {
+          if (frameId) cancelAnimationFrame(frameId)
+        }
+      }
+    }
+  }, [booting])
+
   // Trigger 100% exploration completion notification once
   useEffect(() => {
     if (progress === 100) {
