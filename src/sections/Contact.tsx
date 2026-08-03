@@ -57,45 +57,37 @@ export function Contact({ onFormSubmitted }: ContactProps) {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/dhruvvira17@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: `New Portfolio Briefing from ${formData.name}`,
-          _captcha: "false"
-        })
-      })
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = 'https://formsubmit.co/dhruvvira17@gmail.com'
+      form.target = '_blank'
 
-      const result = await response.json()
-
-      if (response.ok && result.success !== "false") {
-        toast.success('Secure briefing dispatched to dhruvvira17@gmail.com!')
-      } else {
-        const netlifyBody = new URLSearchParams({
-          'form-name': 'contact',
-          name: formData.name,
-          email: formData.email,
-          message: formData.message
-        }).toString()
-
-        await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: netlifyBody
-        })
-
-        toast.success('Briefing dispatched successfully!')
+      const fields: Record<string, string> = {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        _subject: `New Portfolio Briefing from ${formData.name}`,
+        _captcha: 'false',
+        _template: 'table'
       }
+
+      for (const [key, value] of Object.entries(fields)) {
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = key
+        input.value = value
+        form.appendChild(input)
+      }
+
+      document.body.appendChild(form)
+      form.submit()
+      document.body.removeChild(form)
+
+      toast.success('Briefing dispatched! FormSubmit confirmation page opened.')
     } catch (error) {
-      console.error('Email submission error:', error)
+      console.error('Submission error:', error)
       window.location.href = `mailto:dhruvvira17@gmail.com?subject=Briefing%20from%20${encodeURIComponent(formData.name)}&body=Name:%20${encodeURIComponent(formData.name)}%0AEmail:%20${encodeURIComponent(formData.email)}%0A%0AMessage:%0A${encodeURIComponent(formData.message)}`
-      toast.info('Opened mail client to dispatch briefing.')
+      toast.info('Opened mail client to send briefing.')
     } finally {
       setIsSubmitting(false)
       setFormData({ name: '', email: '', message: '' })
