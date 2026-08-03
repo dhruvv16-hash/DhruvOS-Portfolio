@@ -67,16 +67,30 @@ export function Contact({ onFormSubmitted }: ContactProps) {
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          _subject: `New Briefing Packet from ${formData.name}`,
+          _subject: `New Portfolio Briefing from ${formData.name}`,
           _captcha: "false"
         })
       })
 
-      if (response.ok) {
+      const result = await response.json()
+
+      if (response.ok && result.success !== "false") {
         toast.success('Secure briefing dispatched to dhruvvira17@gmail.com!')
       } else {
-        window.location.href = `mailto:dhruvvira17@gmail.com?subject=Briefing%20from%20${encodeURIComponent(formData.name)}&body=Name:%20${encodeURIComponent(formData.name)}%0AEmail:%20${encodeURIComponent(formData.email)}%0A%0AMessage:%0A${encodeURIComponent(formData.message)}`
-        toast.info('Opened mail client to dispatch briefing.')
+        const netlifyBody = new URLSearchParams({
+          'form-name': 'contact',
+          name: formData.name,
+          email: formData.email,
+          message: formData.message
+        }).toString()
+
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: netlifyBody
+        })
+
+        toast.success('Briefing dispatched successfully!')
       }
     } catch (error) {
       console.error('Email submission error:', error)
