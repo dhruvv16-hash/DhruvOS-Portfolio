@@ -85,7 +85,14 @@ function App() {
 
   const trackResumeDownloaded = () => {
     setTelemetry((prev) => ({ ...prev, resumeDownloaded: true }))
-    toast.success('Resume download initiated.')
+    toast.success('Downloading Dhruv_Vira_Resume.docx...')
+
+    const link = document.createElement('a')
+    link.href = '/RESUME.docx'
+    link.download = 'Dhruv_Vira_Resume.docx'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   const toggleRecruiterMode = () => {
@@ -120,7 +127,6 @@ function App() {
       window.open('https://github.com/dhruvv16-hash', '_blank')
     } else if (action === 'download-resume') {
       trackResumeDownloaded()
-      window.open('/Dhruv_Resume_ATS_Optimized_1.docx')
     } else if (action === 'reboot') {
       localStorage.removeItem('dhruvos_booted')
       window.location.reload()
@@ -284,12 +290,14 @@ function App() {
               </p>
               
               <div className="pt-4 flex flex-wrap gap-4 select-none">
-                <button
+                <a
+                  href="/RESUME.docx"
+                  download="Dhruv_Vira_Resume.docx"
                   onClick={trackResumeDownloaded}
                   className="px-4 py-2 bg-white hover:bg-zinc-200 text-black text-xs font-semibold rounded flex items-center gap-1.5 font-sans"
                 >
                   <Download className="w-3.5 h-3.5" /> Download Resume (DOCX)
-                </button>
+                </a>
                 <a
                   href="https://github.com/dhruvv16-hash"
                   target="_blank"
