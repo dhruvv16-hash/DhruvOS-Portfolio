@@ -21,7 +21,7 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   
   // Conversational memory hooks
   const [memory, setMemory] = useState({
@@ -38,8 +38,11 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
   ]
 
   useEffect(() => {
-    if (messages.length > 2) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      })
     }
   }, [messages, isTyping])
 
@@ -143,7 +146,7 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
           </div>
 
           {/* Messages Stream */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 font-mono text-xs md:text-sm">
+          <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 font-mono text-xs md:text-sm">
             {messages.map((msg, index) => (
               <div 
                 key={index} 
@@ -185,7 +188,6 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Quick Suggestions Buttons */}
