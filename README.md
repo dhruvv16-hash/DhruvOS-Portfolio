@@ -4,7 +4,7 @@ DhruvOS is a premium, metadata-driven developer portfolio designed like an inter
 
 ---
 
-## 📸 Portfolio Walkthrough & Screenshots
+##  Portfolio Walkthrough & Screenshots
 
 Here is a visual breakdown of the key modules and layers implemented in DhruvOS:
 
@@ -50,7 +50,7 @@ An interactive secure SSL progressive command line form for recruiters and clien
 
 ---
 
-## 🚀 Key Engineering Polish
+##  Key Engineering Polish
 
 1. **Code Splitting & Performance**: 
    - Utilizes `React.lazy` and named async chunking to slice the main JS bundle size from **918 KB** to **444 KB**, speeding up Time-to-First-Byte (TTFB).
@@ -63,7 +63,7 @@ An interactive secure SSL progressive command line form for recruiters and clien
 
 ---
 
-## 🛠️ Installation & Setup
+##  Installation & Setup
 
 1. **Install Dependencies**:
    ```bash
