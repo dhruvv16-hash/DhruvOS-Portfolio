@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Github, Linkedin, Terminal } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const navItems = [
-  { name: 'Concierge', href: '#assistant' },
-  { name: 'Workspace', href: '#desk' },
-  { name: 'Sandbox Lab', href: '#sandbox' },
-  { name: 'Build Logs', href: '#build-logs' },
-  { name: 'Tech Specs', href: '#specs' },
-  { name: 'Connect', href: '#connect' },
+  { name: 'Concierge', href: '/concierge' },
+  { name: 'Workspace', href: '/workspace' },
+  { name: 'Sandbox Lab', href: '/sandbox-lab' },
+  { name: 'Build Logs', href: '/build-logs' },
+  { name: 'Tech Specs', href: '/tech-specs' },
+  { name: 'Connect', href: '/connect' },
 ]
 
 interface NavbarProps {
@@ -41,20 +42,20 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <a href="#" className="text-xl font-bold text-white font-mono tracking-wider hover:text-red-500 transition-colors">
+            <Link to="/" className="text-xl font-bold text-white font-mono tracking-wider hover:text-red-500 transition-colors">
               DHRUV_OS<span className="text-red-500">.</span>
-            </a>
+            </Link>
             
             {/* Nav links */}
             <div className="hidden md:flex items-center space-x-6">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
-                  className="text-xs font-mono text-zinc-400 hover:text-white transition-colors duration-200"
+                  to={item.href}
+                  className="text-xs font-mono text-zinc-400 hover:text-white transition-colors duration-200 cursor-pointer"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -78,7 +79,7 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
                 <Github className="w-4 h-4" />
               </a>
               <a 
-                href="https://www.linkedin.com/in/dhruv-mayur-vira-5428b031b" 
+                href="https://www.linkedin.com/in/dhruv-vira-33bb19439" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="LinkedIn Profile" 
@@ -86,12 +87,12 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
               >
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a 
-                href="#connect" 
+              <Link 
+                to="/connect" 
                 className="px-3 py-1.5 text-xs font-mono text-black bg-white rounded-lg hover:bg-zinc-200 transition-colors"
               >
                 Connect
-              </a>
+              </Link>
             </div>
             
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden text-white p-2">
@@ -113,17 +114,20 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
           >
             <div className="flex flex-col items-center justify-center h-full space-y-6">
               {navItems.map((item, index) => (
-                <motion.a
+                <motion.div
                   key={item.name}
-                  href={item.href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-xl font-mono text-zinc-300 hover:text-red-500 transition-colors"
                 >
-                  {item.name}
-                </motion.a>
+                  <Link
+                    to={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-xl font-mono text-zinc-300 hover:text-red-500 transition-colors cursor-pointer"
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
               ))}
 
               <button

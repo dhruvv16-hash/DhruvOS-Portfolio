@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer, ReferenceDot } from 'recharts'
-import { Shield, TrendingUp, Sparkles, X, Sliders, Play, Copy, RefreshCw, Layers } from 'lucide-react'
-import { toast } from 'sonner'
+import { useState } from 'react'
+import { Shield, TrendingUp, Sparkles, X, Play, Layers } from 'lucide-react'
+
 import { AnimatePresence } from 'framer-motion'
 
 interface ProductPlaygroundProps {
@@ -64,13 +63,13 @@ export function ProductPlayground({ onSandboxRun }: ProductPlaygroundProps) {
                 <div className="flex justify-between items-center mb-3">
                   <Sparkles className="w-5 h-5 text-zinc-400" />
                 </div>
-                <h3 className="text-base font-bold text-white mb-1">AI Email Writer</h3>
+                <h3 className="text-base font-bold text-white mb-1">AccidentZero AI</h3>
                 <p className="text-xs text-zinc-500 leading-relaxed font-mono">
-                  Chrome Extension compiler composing tone-aware, DOM-injected Gmail replies.
+                  Ensemble model simulator fusing XGBoost telemetry and computer-vision PPE detection.
                 </p>
               </div>
               <button
-                onClick={() => openSandbox('email-writer')}
+                onClick={() => openSandbox('accidentzero')}
                 className="w-full text-center py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-semibold font-mono transition-colors border border-zinc-800"
               >
                 Open Sandbox
@@ -90,13 +89,13 @@ export function ProductPlayground({ onSandboxRun }: ProductPlaygroundProps) {
                 <div className="flex justify-between items-center mb-3">
                   <TrendingUp className="w-5 h-5 text-blue-500" />
                 </div>
-                <h3 className="text-base font-bold text-white mb-1">Trading Backtester</h3>
+                <h3 className="text-base font-bold text-white mb-1">DeltaBridge Trading Backtester</h3>
                 <p className="text-xs text-zinc-500 leading-relaxed font-mono">
-                  Bloomberg-style ETH/USD backtesting dashboard recalculating indicator inputs.
+                  ETH/USD backtesting dashboard calculating UT Bot + Linear Regression + ADX filters.
                 </p>
               </div>
               <button
-                onClick={() => openSandbox('trading')}
+                onClick={() => openSandbox('deltabridge')}
                 className="w-full text-center py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-semibold font-mono transition-colors border border-zinc-800"
               >
                 Open Sandbox
@@ -116,32 +115,32 @@ export function ProductPlayground({ onSandboxRun }: ProductPlaygroundProps) {
                 <div className="flex justify-between items-center mb-3">
                   <Layers className="w-5 h-5 text-green-500" />
                 </div>
-                <h3 className="text-base font-bold text-white mb-1">API Orchestration</h3>
+                <h3 className="text-base font-bold text-white mb-1">VendorOS</h3>
                 <p className="text-xs text-zinc-500 leading-relaxed font-mono">
-                  Middleware request routing visualizer charting cache-hits and rate limiter buckets.
+                  Offline-first PWA sync simulator. Queueing orders in localStorage before dispatching to Supabase.
                 </p>
               </div>
               <button
-                onClick={() => openSandbox('api-orchestrator')}
+                onClick={() => openSandbox('vendoros')}
                 className="w-full text-center py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-semibold font-mono transition-colors border border-zinc-800"
               >
                 Open Sandbox
               </button>
             </div>
 
-            {/* Password Entropy Card */}
+            {/* Open Source Diagnostics Card */}
             <div className="bg-black border border-zinc-900 rounded-xl p-5 hover:border-zinc-700 transition-all flex flex-col justify-between h-48">
               <div>
                 <div className="flex justify-between items-center mb-3">
                   <Shield className="w-5 h-5 text-purple-500" />
                 </div>
-                <h3 className="text-base font-bold text-white mb-1">Password Entropy</h3>
+                <h3 className="text-base font-bold text-white mb-1">Open Source Diagnostics</h3>
                 <p className="text-xs text-zinc-500 leading-relaxed font-mono">
-                  Information theory Shannon entropy calculator parsing credential vulnerabilities.
+                  Trigger automated SQL reconciliation scripts and Azure AD Janitor daemon cleanup pipelines.
                 </p>
               </div>
               <button
-                onClick={() => openSandbox('password-checker')}
+                onClick={() => openSandbox('opensource')}
                 className="w-full text-center py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-semibold font-mono transition-colors border border-zinc-800"
               >
                 Open Sandbox
@@ -176,11 +175,10 @@ export function ProductPlayground({ onSandboxRun }: ProductPlaygroundProps) {
                 {/* Sandbox Body Content */}
                 <div className="flex-1 overflow-y-auto p-6">
                   {activeSandbox === 'investorgpt' && <InvestorGPTSandbox />}
-                  {activeSandbox === 'email-writer' && <EmailWriterSandbox />}
-                  {activeSandbox === 'trading' && <TradingSandbox />}
-                  {activeSandbox === 'api-orchestrator' && <APIOrchestratorSandbox />}
-                  {activeSandbox === 'password-checker' && <PasswordCheckerSandbox />}
-                  {activeSandbox === 'mcp-server' && <MCPSandbox />}
+                  {activeSandbox === 'accidentzero' && <AccidentZeroSandbox />}
+                  {activeSandbox === 'deltabridge' && <DeltaBridgeSandbox />}
+                  {activeSandbox === 'vendoros' && <VendorOSSandbox />}
+                  {activeSandbox === 'opensource' && <OpenSourceSandbox />}
                 </div>
               </div>
             </div>
@@ -423,117 +421,143 @@ function InvestorGPTSandbox() {
 }
 
 // ----------------------------------------------------
-// 2. EMAIL WRITER SANDBOX MODULE
+// 2. ACCIDENTZERO AI SANDBOX MODULE
 // ----------------------------------------------------
-function EmailWriterSandbox() {
-  const [topic, setTopic] = useState('Requesting extension on deliverable')
-  const [tone, setTone] = useState<'professional' | 'casual' | 'urgent' | 'apologetic'>('professional')
-  const [output, setOutput] = useState('')
-  const [metrics, setMetrics] = useState({ latency: 0, promptTokens: 0, compTokens: 0 })
-  const [isLoading, setIsLoading] = useState(false)
+function AccidentZeroSandbox() {
+  const [isSimulating, setIsSimulating] = useState(false)
+  const [logs, setLogs] = useState<string[]>([])
+  const [riskScore, setRiskScore] = useState(12)
 
-  const mockEmails: Record<string, Record<string, string>> = {
-    'Requesting extension on deliverable': {
-      professional: "Dear Team,\n\nI am writing to formally request a brief extension on the deliverable scheduled for this Friday. Due to integration bottlenecks, we require an additional 48 hours to complete rigorous unit testing.\n\nThank you for your understanding.\n\nBest regards,\nDhruv Vira",
-      casual: "Hey team,\n\nRunning into a few API delays, so I need to push our deadline back by 2 days. Want to make sure we squish all bugs before shipping.\n\nThanks!\nDhruv",
-      urgent: "Hi Team,\n\nWe require an emergency 48-hour extension on the release pipeline. API rate-limiting is failing deployment validations. Critical adjustments in progress.\n\nBest,\nDhruv Vira",
-      apologetic: "Dear Team,\n\nI sincerely apologize, but we will not meet the deliverable timeline. I took longer than expected to fix a race condition on concurrent API calls. I request an extension until Monday.\n\nThank you,\nDhruv"
-    }
-  }
-
-  const generateEmail = () => {
-    setIsLoading(true)
-    setOutput('')
+  const runSimulation = () => {
+    setIsSimulating(true)
+    setLogs(['Initializing XGBoost telemetry ingest...'])
+    setRiskScore(12)
     
-    // Simulate API calls
     setTimeout(() => {
-      const prompt = mockEmails[topic] || mockEmails['Requesting extension on deliverable']
-      setOutput(prompt[tone])
-      setMetrics({
-        latency: Math.floor(Math.random() * 120) + 240,
-        promptTokens: Math.floor(topic.length / 3) + 20,
-        compTokens: Math.floor((prompt[tone]?.length || 0) / 4)
-      })
-      setIsLoading(false)
+      setLogs(prev => [...prev, 'CV Pipeline: Processing feed CCTV_04...'])
+      setRiskScore(24)
     }, 800)
-  }
+    
+    setTimeout(() => {
+      setLogs(prev => [...prev, 'CatBoost Module: Thermal deviation detected (Zone 3).'])
+      setRiskScore(58)
+    }, 1600)
 
-  const copyText = () => {
-    navigator.clipboard.writeText(output)
-    toast.success('Email draft copied to clipboard!')
+    setTimeout(() => {
+      setLogs(prev => [...prev, 'LightGBM: Correlating with worker proximity metrics...'])
+    }, 2400)
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, 'CV Pipeline: ALERT! Missing hardhat detected (Confidence: 0.94).'])
+      setRiskScore(92)
+    }, 3200)
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, 'Ensemble fused output: CRITICAL RISK. Firing webhook.'])
+      setIsSimulating(false)
+    }, 4000)
   }
 
   return (
     <div className="grid md:grid-cols-2 gap-6 font-mono text-xs md:text-sm text-green-500">
       <div className="space-y-4 bg-zinc-900/20 p-5 rounded-lg border border-zinc-900">
-        <h4 className="text-zinc-200 font-bold border-b border-zinc-800 pb-2">INPUT PARAMETERS</h4>
+        <h4 className="text-zinc-200 font-bold border-b border-zinc-800 pb-2">ACCIDENTZERO TELEMETRY DASHBOARD</h4>
         
-        <div className="space-y-2">
-          <label className="text-zinc-500">Email Topic / Prompt:</label>
-          <input
-            type="text"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            className="w-full bg-zinc-950 border border-zinc-800 rounded p-2 text-zinc-350 outline-none"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-zinc-500">Select Tone:</label>
-          <div className="grid grid-cols-2 gap-2">
-            {(['professional', 'casual', 'urgent', 'apologetic'] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTone(t)}
-                className={`py-1.5 border rounded capitalize font-mono text-xs ${
-                  tone === t 
-                    ? 'border-red-500 bg-red-500/10 text-red-400' 
-                    : 'border-zinc-800 hover:border-zinc-700 bg-zinc-900/20 text-zinc-500'
-                }`}
-              >
-                {t}
-              </button>
-            ))}
+        <div className="space-y-4 pt-2">
+          <div className="flex justify-between items-center text-zinc-400">
+            <span>Active Worker Count</span>
+            <span className="text-white">42</span>
+          </div>
+          <div className="flex justify-between items-center text-zinc-400">
+            <span>Thermal Averages (Zone 3)</span>
+            <span className="text-yellow-500">48.2C [ELEVATED]</span>
+          </div>
+          <div className="flex justify-between items-center text-zinc-400">
+            <span>CV Processing Latency</span>
+            <span className="text-white">42ms</span>
           </div>
         </div>
 
         <button
-          onClick={generateEmail}
-          disabled={isLoading || !topic.trim()}
-          className="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors flex items-center justify-center gap-2 border border-red-500/20"
+          onClick={runSimulation}
+          disabled={isSimulating}
+          className="mt-6 w-full py-2 bg-red-600 hover:bg-red-700 text-white rounded font-bold transition-colors disabled:opacity-50"
         >
-          <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
-          <span>Generate Reply Draft</span>
+          {isSimulating ? 'Fusing Models...' : 'Inject Anomaly (Simulate Risk)'}
         </button>
       </div>
 
-      {/* Output preview */}
-      <div className="flex flex-col h-[340px] bg-black rounded-lg border border-zinc-900 overflow-hidden">
-        <div className="px-4 py-2 bg-zinc-900 text-zinc-400 font-bold border-b border-zinc-850 flex justify-between items-center text-xxs">
-          <span>OUTPUT PREVIEW</span>
-          <button 
-            onClick={copyText}
-            disabled={!output}
-            className="flex items-center gap-1 hover:text-white transition-colors disabled:opacity-50"
-          >
-            <Copy className="w-3.5 h-3.5" /> Copy Draft
-          </button>
+      <div className="space-y-4">
+        <div className="bg-black border border-zinc-900 rounded p-4 h-[200px] flex flex-col items-center justify-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-cyber opacity-10" />
+          <div className="text-zinc-500 mb-2 font-bold tracking-widest z-10">ENSEMBLE RISK SCORE</div>
+          <div className={`text-6xl font-black z-10 transition-colors duration-500 ${riskScore > 80 ? 'text-red-500 animate-pulse' : riskScore > 50 ? 'text-yellow-500' : 'text-green-500'}`}>
+            {riskScore}%
+          </div>
+          <div className="w-full bg-zinc-900 h-2 mt-4 rounded overflow-hidden z-10">
+            <div className={`h-full transition-all duration-500 ${riskScore > 80 ? 'bg-red-500' : riskScore > 50 ? 'bg-yellow-500' : 'bg-green-500'}`} style={{ width: `${riskScore}%` }} />
+          </div>
         </div>
 
-        <div className="flex-1 p-4 overflow-y-auto font-mono text-zinc-300 whitespace-pre-wrap leading-relaxed">
-          {output ? output : (
-            <div className="text-zinc-650 italic text-center py-20">
-              Click Generate Draft to synthesize response using mock Gemini routing...
-            </div>
+        <div className="bg-black border border-zinc-900 rounded p-4 h-[150px] overflow-y-auto">
+          {logs.length === 0 ? (
+            <div className="text-zinc-600">Awaiting system activation...</div>
+          ) : (
+            logs.map((log, i) => (
+              <div key={i} className={`mb-1 ${log.includes('ALERT') ? 'text-red-500' : 'text-green-500/80'}`}>
+                &gt; {log}
+              </div>
+            ))
           )}
         </div>
+      </div>
+    </div>
+  )
+}
 
-        {output && (
-          <div className="px-4 py-2 bg-zinc-950 border-t border-zinc-900 text-xxs text-zinc-500 flex justify-between font-mono">
-            <span>Latency: {metrics.latency}ms</span>
-            <span>Prompt: {metrics.promptTokens}t</span>
-            <span>Completion: {metrics.compTokens}t</span>
-          </div>
+// 3. DELTABRIDGE SANDBOX MODULE
+// ----------------------------------------------------
+function DeltaBridgeSandbox() {
+  const [logs, setLogs] = useState<string[]>([])
+  const [isRunning, setIsRunning] = useState(false)
+  
+  const startBacktest = () => {
+    setIsRunning(true)
+    setLogs(['Initializing DeltaBridge ETH/USD Backtester...'])
+    
+    setTimeout(() => setLogs(prev => [...prev, 'Loading historical candles (2024-2025)...']), 500)
+    setTimeout(() => setLogs(prev => [...prev, 'Applying UT Bot parameters (Sensitivity: 2, ATR Period: 1)...']), 1200)
+    setTimeout(() => setLogs(prev => [...prev, 'Applying Linear Regression & ADX noise filters...']), 1800)
+    setTimeout(() => setLogs(prev => [...prev, 'Execution: Found 742 valid setups.']), 2500)
+    setTimeout(() => setLogs(prev => [...prev, 'Results: Profit Factor 1.84. Win Rate 68%. Max Drawdown 4.2%']), 3200)
+    setTimeout(() => setIsRunning(false), 3300)
+  }
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6 font-mono text-xs md:text-sm text-green-500">
+      <div className="space-y-4 bg-zinc-900/20 p-5 rounded-lg border border-zinc-900">
+         <h4 className="text-zinc-200 font-bold border-b border-zinc-800 pb-2">STRATEGY CONFIGURATION</h4>
+         <div className="space-y-2 text-zinc-400">
+           <div><span className="text-white">Asset:</span> ETH/USD Perpetual</div>
+           <div><span className="text-white">Timeframe:</span> 15m / 1H Multi-Timeframe</div>
+           <div><span className="text-white">Indicator 1:</span> UT Bot Alerts</div>
+           <div><span className="text-white">Indicator 2:</span> Linear Regression</div>
+           <div><span className="text-white">Indicator 3:</span> ADX (Threshold &gt; 25)</div>
+         </div>
+         <button onClick={startBacktest} disabled={isRunning} className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-bold disabled:opacity-50 mt-4">
+           {isRunning ? 'Running Simulation...' : 'Execute Backtest'}
+         </button>
+      </div>
+      <div className="bg-black border border-zinc-900 rounded p-4 h-[300px] overflow-y-auto">
+        <div className="text-zinc-500 mb-2 font-bold tracking-widest border-b border-zinc-900 pb-2">EXECUTION LOGS</div>
+        {logs.length === 0 ? (
+          <div className="text-zinc-700 italic">Ready to run strategy...</div>
+        ) : (
+          logs.map((log, i) => (
+            <div key={i} className="mb-2 text-blue-400">
+              <span className="text-zinc-600">[{new Date().toISOString().split('T')[1].slice(0,8)}]</span> {log}
+            </div>
+          ))
         )}
       </div>
     </div>
@@ -541,582 +565,106 @@ function EmailWriterSandbox() {
 }
 
 // ----------------------------------------------------
-// 3. TRADING SANDBOX MODULE (BLOOMBERG LITE)
+﻿﻿// 4. VENDOROS SANDBOX MODULE
 // ----------------------------------------------------
-function TradingSandbox() {
-  const [keyValue, setKeyValue] = useState(3.0)
-  const [atrPeriod, setAtrPeriod] = useState(10)
-  const [adxThreshold, setAdxThreshold] = useState(25)
-  const [tradeLogs, setTradeLogs] = useState<string[]>([])
-  const [stats, setStats] = useState({ netProfit: 0, winRate: 0, drawdown: 0 })
+function VendorOSSandbox() {
+  const [isOnline, setIsOnline] = useState(true)
+  const [queue, setQueue] = useState<string[]>([])
+  const [supabaseDB, setSupabaseDB] = useState<string[]>([])
 
-  // Static price data for ETH/USD over 10 intervals
-  const rawPriceData = [
-    { name: 'T1', price: 2320, adx: 22 },
-    { name: 'T2', price: 2340, adx: 24 },
-    { name: 'T3', price: 2330, adx: 23 },
-    { name: 'T4', price: 2370, adx: 26 }, // Crossover (Buy!)
-    { name: 'T5', price: 2390, adx: 28 },
-    { name: 'T6', price: 2420, adx: 32 },
-    { name: 'T7', price: 2410, adx: 30 },
-    { name: 'T8', price: 2460, adx: 35 }, // Exits at target or stays long
-    { name: 'T9', price: 2450, adx: 33 },
-    { name: 'T10', price: 2490, adx: 37 }
-  ]
-
-  // Re-run backtest on slider adjustments
-  useEffect(() => {
-    const runLocalBacktest = () => {
-      const logs: string[] = []
-      let entries = 0
-      let wins = 0
-      let capital = 10000
-
-      // Simplistic indicator simulation
-      rawPriceData.forEach((data, i) => {
-        // If price crosses above regression average and trend strength is high (ADX threshold)
-        if (data.price > 2350 && data.adx > adxThreshold) {
-          if (i === 3) {
-            logs.push(`[${data.name}] BUY LONG @ $${data.price} (ADX: ${data.adx} > ${adxThreshold})`)
-            entries++
-          } else if (i === 7) {
-            logs.push(`[${data.name}] SELL CLOSE @ $${data.price} (Net: +$${data.price - 2370})`)
-            wins++
-            capital += (data.price - 2370) * 4 // size
-          }
-        }
-      })
-
-      const winRatio = entries > 0 ? Math.round((wins / entries) * 100) : 68
-      const netPct = Math.round(((capital - 10000) / 10000) * 100)
-      
-      // Fine-tune outputs based on parameters
-      const multiplier = keyValue > 3.0 ? 0.9 : 1.15
-      
-      setStats({
-        netProfit: Math.round(netPct * multiplier),
-        winRate: Math.round(winRatio * (keyValue > 3.5 ? 0.85 : 1.05)),
-        drawdown: Math.round(4.2 * (keyValue > 4.0 ? 0.6 : 1.2))
-      })
-      setTradeLogs(logs.length > 0 ? logs : ['Strategy scanned: sideways chop detected. Filters prevented entries.'])
-    }
-
-    runLocalBacktest()
-  }, [keyValue, atrPeriod, adxThreshold])
-
-  return (
-    <div className="grid lg:grid-cols-3 gap-6 font-mono text-xs md:text-sm text-green-500">
-      
-      {/* Parameters Controls */}
-      <div className="bg-zinc-900/20 p-5 rounded-lg border border-zinc-900 space-y-5">
-        <h4 className="text-zinc-200 font-bold border-b border-zinc-800 pb-2 flex items-center gap-1.5">
-          <Sliders className="w-4 h-4 text-blue-500" /> STRATEGY INPUTS
-        </h4>
-        
-        <div className="space-y-1">
-          <div className="flex justify-between text-xxs">
-            <span className="text-zinc-500">Key Value (UT Alerts):</span>
-            <span className="text-blue-400 font-bold">{keyValue.toFixed(1)}</span>
-          </div>
-          <input
-            type="range"
-            min="1.0"
-            max="5.0"
-            step="0.5"
-            value={keyValue}
-            onChange={(e) => setKeyValue(parseFloat(e.target.value))}
-            className="w-full accent-blue-500 h-1 bg-zinc-850 rounded-lg appearance-none cursor-pointer"
-          />
-        </div>
-
-        <div className="space-y-1">
-          <div className="flex justify-between text-xxs">
-            <span className="text-zinc-500">ATR Period:</span>
-            <span className="text-blue-400 font-bold">{atrPeriod}</span>
-          </div>
-          <input
-            type="range"
-            min="5"
-            max="20"
-            step="1"
-            value={atrPeriod}
-            onChange={(e) => setAtrPeriod(parseInt(e.target.value))}
-            className="w-full accent-blue-500 h-1 bg-zinc-850 rounded-lg appearance-none cursor-pointer"
-          />
-        </div>
-
-        <div className="space-y-1">
-          <div className="flex justify-between text-xxs">
-            <span className="text-zinc-500">ADX Trend Filter Threshold:</span>
-            <span className="text-blue-400 font-bold">{adxThreshold}</span>
-          </div>
-          <input
-            type="range"
-            min="10"
-            max="50"
-            step="5"
-            value={adxThreshold}
-            onChange={(e) => setAdxThreshold(parseInt(e.target.value))}
-            className="w-full accent-blue-500 h-1 bg-zinc-850 rounded-lg appearance-none cursor-pointer"
-          />
-        </div>
-
-        {/* Backtest metrics */}
-        <div className="space-y-2 pt-3 border-t border-zinc-900">
-          <div className="text-[10px] text-zinc-500 uppercase tracking-widest">Performance Stats:</div>
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="bg-black/60 p-2 border border-zinc-900 rounded">
-              <span className="text-xxs text-zinc-500 block">Net Profit</span>
-              <span className="text-green-500 font-bold">+{stats.netProfit}%</span>
-            </div>
-            <div className="bg-black/60 p-2 border border-zinc-900 rounded">
-              <span className="text-xxs text-zinc-500 block">Win Rate</span>
-              <span className="text-white font-bold">{stats.winRate}%</span>
-            </div>
-            <div className="bg-black/60 p-2 border border-zinc-900 rounded">
-              <span className="text-xxs text-zinc-500 block">Max DD</span>
-              <span className="text-red-500 font-bold">-{stats.drawdown}%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Chart (Recharts) */}
-      <div className="bg-black rounded-lg border border-zinc-900 p-4 h-[320px] flex flex-col lg:col-span-2">
-        <div className="text-xxs text-zinc-500 uppercase tracking-widest mb-3 border-b border-zinc-900 pb-2 flex justify-between">
-          <span>ETH/USD 15M CANDLE CHART</span>
-          <span className="text-green-500 text-xxs font-bold">UT Bot Strategy</span>
-        </div>
-
-        <div className="flex-1 min-h-0">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={rawPriceData} margin={{ top: 10, right: 10, left: -25, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1c1c1f" />
-              <XAxis dataKey="name" stroke="#52525b" style={{ fontSize: '10px' }} />
-              <YAxis domain={[2300, 2520]} stroke="#52525b" style={{ fontSize: '10px' }} />
-              <ChartTooltip contentStyle={{ background: '#09090b', borderColor: '#27272a' }} />
-              <Line type="monotone" dataKey="price" stroke="#ef4444" strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
-              {/* Crossover dot highlights */}
-              <ReferenceDot x="T4" y={2370} r={6} fill="#22c55e" stroke="none" label={{ value: 'B', fill: '#fff', fontSize: 10, fontWeight: 'bold', position: 'top' }} />
-              <ReferenceDot x="T8" y={2460} r={6} fill="#ef4444" stroke="none" label={{ value: 'S', fill: '#fff', fontSize: 10, fontWeight: 'bold', position: 'top' }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Backtester log output */}
-        <div className="mt-3 bg-zinc-950 p-2 rounded border border-zinc-900 font-mono text-[10px] text-zinc-400 max-h-16 overflow-y-auto">
-          {tradeLogs.map((log, i) => (
-            <div key={i} className="truncate">
-              <span className="text-blue-500">&gt;&gt;</span> {log}
-            </div>
-          ))}
-        </div>
-      </div>
-
-    </div>
-  )
-}
-
-// ----------------------------------------------------
-// 4. API ORCHESTRATION SANDBOX MODULE
-// ----------------------------------------------------
-function APIOrchestratorSandbox() {
-  const [logs, setLogs] = useState<string[]>([])
-  const [tokens, setTokens] = useState(10)
-  const [isCaching, setIsCaching] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const executePipeline = () => {
-    if (isLoading) return
-    
-    // Check Rate Limit Bucket
-    if (tokens <= 0) {
-      setLogs((prev) => [
-        ...prev,
-        `[${new Date().toLocaleTimeString()}] INCOMING REQUEST GET /api/v1/data`,
-        `[${new Date().toLocaleTimeString()}] rate_limit check: tokens remaining 0/10 [BLOCKED]`,
-        `[${new Date().toLocaleTimeString()}] RESPONSE: [429] Too Many Requests. Burst Limit Exceeded.`
-      ].slice(-10))
-      return
-    }
-
-    setIsLoading(true)
-    setTokens((prev) => Math.max(0, prev - 1))
-
-    const pipeLogs = [
-      `[${new Date().toLocaleTimeString()}] INCOMING REQUEST GET /api/v1/data`,
-      `[${new Date().toLocaleTimeString()}] rate_limit validation: tokens remaining ${tokens - 1}/10 [OK]`,
-      `[${new Date().toLocaleTimeString()}] redis_cache check: query key 'manifest_data' [${isCaching ? 'CACHE_HIT' : 'CACHE_MISS'}]`,
-      isCaching 
-        ? `[${new Date().toLocaleTimeString()}] Cache record fetched (0.8ms). Skipping database query routing.`
-        : `[${new Date().toLocaleTimeString()}] Routing query pipeline to Postgres DB (34ms). Syncing redis cache...`,
-      `[${new Date().toLocaleTimeString()}] Microservice handshake: executing remote API payload fetch (110ms)...`,
-      `[${new Date().toLocaleTimeString()}] pipeline serialization: mapping DTO payloads to JSON response... [OK]`,
-      `[${new Date().toLocaleTimeString()}] RESPONSE: [200] Success. Bytes: 1.8KB. Latency: ${isCaching ? '112ms' : '154ms'}`
-    ]
-
-    let logIdx = 0
-    const interval = setInterval(() => {
-      if (logIdx < pipeLogs.length) {
-        setLogs((prev) => [...prev, pipeLogs[logIdx]].slice(-10))
-        logIdx++
-      } else {
-        clearInterval(interval)
-        setIsLoading(false)
-      }
-    }, 200)
-  }
-
-  const drainRateLimiter = () => {
-    setTokens(0)
-    setLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] Action: Drained Token Bucket rate limiter manually.`].slice(-10))
-  }
-
-  const resetPipeline = () => {
-    setTokens(10)
-    setLogs([])
-  }
-
-  return (
-    <div className="grid md:grid-cols-2 gap-6 font-mono text-xs md:text-sm text-green-500">
-      
-      {/* Inputs controls */}
-      <div className="bg-zinc-900/20 p-5 rounded-lg border border-zinc-900 space-y-4">
-        <h4 className="text-zinc-200 font-bold border-b border-zinc-800 pb-2">MIDDLEWARE PIPELINE SETTINGS</h4>
-        
-        <div className="flex justify-between items-center bg-black/60 p-3 border border-zinc-900 rounded">
-          <div>
-            <span className="text-zinc-300 font-bold block">Redis Caching State</span>
-            <span className="text-xxs text-zinc-500">Toggle CACHE_HIT or CACHE_MISS performance path.</span>
-          </div>
-          <button
-            onClick={() => setIsCaching(!isCaching)}
-            className={`px-3 py-1 border rounded text-xs font-semibold ${
-              isCaching 
-                ? 'border-green-500/50 bg-green-500/10 text-green-400' 
-                : 'border-zinc-850 bg-zinc-900 text-zinc-500'
-            }`}
-          >
-            {isCaching ? 'Cache: Enabled' : 'Cache: Disabled'}
-          </button>
-        </div>
-
-        <div className="flex justify-between items-center bg-black/60 p-3 border border-zinc-900 rounded">
-          <div>
-            <span className="text-zinc-300 font-bold block">Token Limiter Bucket</span>
-            <span className="text-xxs text-zinc-500">Current available tokens: {tokens} / 10</span>
-          </div>
-          <button
-            onClick={drainRateLimiter}
-            className="px-3 py-1 border border-red-500/30 hover:border-red-500 bg-red-950/20 text-red-400 text-xs rounded transition-all"
-          >
-            Drain Bucket
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            onClick={executePipeline}
-            disabled={isLoading}
-            className="py-2.5 bg-green-600 hover:bg-green-700 text-white rounded font-bold transition-colors flex items-center justify-center gap-1.5"
-          >
-            <Play className="w-3.5 h-3.5 fill-white" />
-            <span>Call API</span>
-          </button>
-          <button
-            onClick={resetPipeline}
-            className="py-2.5 border border-zinc-855 bg-zinc-900/40 text-zinc-500 hover:text-white rounded transition-colors"
-          >
-            Clear logs
-          </button>
-        </div>
-      </div>
-
-      {/* Terminal log panel */}
-      <div className="flex flex-col h-[340px] bg-black rounded-lg border border-zinc-900 overflow-hidden">
-        <div className="px-4 py-2 bg-zinc-900 text-zinc-400 font-bold border-b border-zinc-850 flex justify-between items-center text-xxs">
-          <span>PIPELINE ROUTING CONSOLE</span>
-          <span>Gateway: FastAPI</span>
-        </div>
-
-        <div className="flex-1 p-4 overflow-y-auto space-y-2.5 font-mono text-[10px] text-zinc-400">
-          {logs.length > 0 ? (
-            logs.map((log, i) => (
-              <div key={i} className="flex gap-2">
-                <span className="text-zinc-700">&gt;&gt;</span>
-                <span className={log.includes('RESPONSE') ? 'text-green-400 font-bold' : log.includes('BLOCKED') ? 'text-red-400 font-bold' : ''}>
-                  {log}
-                </span>
-              </div>
-            ))
-          ) : (
-            <div className="text-zinc-650 italic text-center py-20">
-              Click 'Call API' to trigger incoming requests and view server pipeline execution tracing.
-            </div>
-          )}
-        </div>
-      </div>
-
-    </div>
-  )
-}
-
-// ----------------------------------------------------
-// 5. PASSWORD CHECKER SANDBOX MODULE
-// ----------------------------------------------------
-function PasswordCheckerSandbox() {
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-
-  // Actual Shannon Entropy formula calculation
-  const calculateEntropy = (str: string) => {
-    if (!str) return 0
-    const len = str.length
-    const frequencies: Record<string, number> = {}
-    
-    // count frequencies
-    for (let char of str) {
-      frequencies[char] = (frequencies[char] || 0) + 1
-    }
-
-    let entropy = 0
-    for (let char in frequencies) {
-      const p = frequencies[char] / len
-      entropy -= p * Math.log2(p)
-    }
-
-    return entropy * len // total bits
-  }
-
-  const entropyBits = calculateEntropy(password)
-
-  // Calculations for Brute force calculations
-  const calculateCrackTime = (bits: number) => {
-    if (bits === 0) return 'Instant'
-    
-    // Guesses per second on a standard GPU rig (100 Billion / sec)
-    const guessesPerSec = 1e11
-    const totalCombinations = Math.pow(2, bits)
-    const seconds = totalCombinations / guessesPerSec
-    
-    if (seconds < 1) return `${(seconds * 1000).toFixed(2)} ms`
-    if (seconds < 60) return `${seconds.toFixed(1)} seconds`
-    if (seconds < 3600) return `${Math.round(seconds / 60)} minutes`
-    if (seconds < 86400) return `${Math.round(seconds / 3600)} hours`
-    if (seconds < 3.154e7) return `${Math.round(seconds / 86400)} days`
-    if (seconds < 3.154e10) return `${Math.round(seconds / 3.154e7)} years`
-    return 'Centuries'
-  }
-
-  const crackTime = calculateCrackTime(entropyBits)
-
-  // Verify requirements
-  const checks = {
-    length: password.length >= 10,
-    hasUpper: /[A-Z]/.test(password),
-    hasLower: /[a-z]/.test(password),
-    hasDigit: /\d/.test(password),
-    hasSpecial: /[!@#$%^&*(),.?":{}|<>]/.test(password)
-  }
-
-  const getStrengthTier = (bits: number) => {
-    if (bits === 0) return { label: 'Empty', color: 'text-zinc-650' }
-    if (bits < 28) return { label: 'Very Weak', color: 'text-red-500' }
-    if (bits < 40) return { label: 'Weak', color: 'text-orange-500' }
-    if (bits < 60) return { label: 'Moderate', color: 'text-yellow-500' }
-    if (bits < 80) return { label: 'Strong', color: 'text-green-500' }
-    return { label: 'Extremely Secure', color: 'text-emerald-400' }
-  }
-
-  const tier = getStrengthTier(entropyBits)
-
-  return (
-    <div className="grid md:grid-cols-2 gap-6 font-mono text-xs md:text-sm text-green-500">
-      
-      {/* Inputs */}
-      <div className="bg-zinc-900/20 p-5 rounded-lg border border-zinc-900 space-y-4">
-        <h4 className="text-zinc-200 font-bold border-b border-zinc-800 pb-2">CREDENTIAL PORTAL</h4>
-        
-        <div className="space-y-2">
-          <label className="text-zinc-500">Enter Password Key:</label>
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-850 rounded p-2.5 text-zinc-200 outline-none pr-16"
-            />
-            <button
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-2 top-2 px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-500 hover:text-white rounded text-xxs transition-colors"
-            >
-              {showPassword ? 'Hide' : 'Show'}
-            </button>
-          </div>
-        </div>
-
-        {/* Requirements check list */}
-        <div className="space-y-2 pt-2">
-          <span className="text-[10px] text-zinc-500 uppercase tracking-widest">Remediation checklist:</span>
-          <ul className="space-y-1.5 font-mono text-xxs">
-            <li className={`flex items-center gap-2 ${checks.length ? 'text-green-500' : 'text-zinc-650'}`}>
-              <span className="w-1.5 h-1.5 rounded-full bg-current" /> Minimum 10 characters length
-            </li>
-            <li className={`flex items-center gap-2 ${checks.hasUpper ? 'text-green-500' : 'text-zinc-650'}`}>
-              <span className="w-1.5 h-1.5 rounded-full bg-current" /> Incorporates UPPERCASE letters
-            </li>
-            <li className={`flex items-center gap-2 ${checks.hasLower ? 'text-green-500' : 'text-zinc-650'}`}>
-              <span className="w-1.5 h-1.5 rounded-full bg-current" /> Incorporates lowercase letters
-            </li>
-            <li className={`flex items-center gap-2 ${checks.hasDigit ? 'text-green-500' : 'text-zinc-650'}`}>
-              <span className="w-1.5 h-1.5 rounded-full bg-current" /> Incorporates numbers [0-9]
-            </li>
-            <li className={`flex items-center gap-2 ${checks.hasSpecial ? 'text-green-500' : 'text-zinc-650'}`}>
-              <span className="w-1.5 h-1.5 rounded-full bg-current" /> Incorporates specials [!@#$%^&*]
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Diagnostics outputs */}
-      <div className="bg-black rounded-lg border border-zinc-900 p-5 space-y-6">
-        <h4 className="text-zinc-200 font-bold border-b border-zinc-900 pb-2 text-xxs uppercase tracking-widest">
-          ENTROPY DIAGNOSTICS
-        </h4>
-
-        <div className="space-y-4">
-          <div>
-            <span className="text-zinc-500 block text-xxs">Shannon Entropy:</span>
-            <div className="text-lg font-bold text-white flex items-baseline gap-1">
-              <span>{entropyBits.toFixed(2)}</span>
-              <span className="text-xs text-zinc-500">total bits</span>
-            </div>
-          </div>
-
-          <div>
-            <span className="text-zinc-500 block text-xxs">Strength Tier:</span>
-            <div className={`text-base font-bold uppercase tracking-wider ${tier.color}`}>
-              {tier.label}
-            </div>
-          </div>
-
-          <div>
-            <span className="text-zinc-500 block text-xxs">Est. Brute-Force Break Time:</span>
-            <div className="text-sm font-bold text-white">
-              {crackTime}
-            </div>
-            <span className="text-[9px] text-zinc-600 block mt-0.5">
-              (Benchmarked at 100 Billion guesses/second cluster rate)
-            </span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  )
-}
-
-// ----------------------------------------------------
-// 6. MODEL CONTEXT PROTOCOL SANDBOX MODULE
-// ----------------------------------------------------
-export function MCPSandbox() {
-  const [logs, setLogs] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [selectedTool, setSelectedTool] = useState<string | null>(null)
-
-  const mcpTools = [
-    { name: 'list_tools', desc: 'Queries list of tools exposed by the MCP server' },
-    { name: 'call: read_file', desc: 'Invokes tool to read file contents over protocol channel' },
-    { name: 'call: calculator', desc: 'Invokes tool to calculate math expression' }
-  ]
-
-  const triggerMCP = (toolName: string) => {
-    setIsLoading(true)
-    setSelectedTool(toolName)
-    setLogs([])
-
-    const time = new Date().toLocaleTimeString()
-    
-    let actions: string[] = []
-    if (toolName === 'list_tools') {
-      actions = [
-        `[${time}] --> SEND: { "jsonrpc": "2.0", "id": 1, "method": "tools/list" }`,
-        `[${time}] [MCP Client] Connection channel established: IPC (Stdio)`,
-        `[${time}] <-- RECV: { "jsonrpc": "2.0", "id": 1, "result": { "tools": [{ "name": "read_file", "description": "Read file from disk" }, { "name": "calculator", "description": "Execute basic math operations" }] } }`
-      ]
-    } else if (toolName === 'call: read_file') {
-      actions = [
-        `[${time}] --> SEND: { "jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": { "name": "read_file", "arguments": { "path": "src/App.tsx" } } }`,
-        `[${time}] [MCP Client] Executing standard read_file script (Path: src/App.tsx)...`,
-        `[${time}] <-- RECV: { "jsonrpc": "2.0", "id": 2, "result": { "content": [{ "type": "text", "text": "import React from 'react';\\nexport default function App() { ... }" }] } }`
-      ]
+  const addOrder = () => {
+    const orderId = 'ORD-' + (Math.floor(Math.random() * 9000) + 1000)
+    if (isOnline) {
+      setSupabaseDB(prev => [...prev, orderId])
     } else {
-      actions = [
-        `[${time}] --> SEND: { "jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": { "name": "calculator", "arguments": { "expression": "42 * 10" } } }`,
-        `[${time}] [MCP Client] Executing basic compute logic...`,
-        `[${time}] <-- RECV: { "jsonrpc": "2.0", "id": 3, "result": { "content": [{ "type": "text", "text": "Result: 420" }] } }`
-      ]
+      setQueue(prev => [...prev, orderId])
     }
+  }
 
-    let i = 0
-    const interval = setInterval(() => {
-      if (i < actions.length) {
-        setLogs(prev => [...prev, actions[i]])
-        i++
-      } else {
-        clearInterval(interval)
-        setIsLoading(false)
-      }
-    }, 400)
+  const toggleNetwork = () => {
+    if (!isOnline && queue.length > 0) {
+      // Reconnected! Flush queue
+      setSupabaseDB(prev => [...prev, ...queue])
+      setQueue([])
+    }
+    setIsOnline(!isOnline)
   }
 
   return (
     <div className="grid md:grid-cols-2 gap-6 font-mono text-xs md:text-sm text-green-500">
       <div className="space-y-4 bg-zinc-900/20 p-5 rounded-lg border border-zinc-900">
-        <h4 className="text-zinc-200 font-bold border-b border-zinc-800 pb-2">EXPOSE PROTOCOL ACTIONS</h4>
-        
-        <div className="flex flex-col gap-3">
-          {mcpTools.map((tool) => (
-            <button
-              key={tool.name}
-              onClick={() => triggerMCP(tool.name)}
-              disabled={isLoading}
-              className={`p-3 border rounded-lg text-left transition-all ${
-                selectedTool === tool.name 
-                  ? 'border-red-500 bg-red-500/10 text-red-400 font-bold' 
-                  : 'border-zinc-800 hover:border-zinc-700 bg-zinc-950/40 text-zinc-400'
-              }`}
-            >
-              <div className="text-xs text-white">{tool.name}</div>
-              <div className="text-[10px] text-zinc-500 mt-1">{tool.desc}</div>
-            </button>
-          ))}
-        </div>
+         <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
+           <h4 className="text-zinc-200 font-bold">VENDOR-OS POS DEVICE</h4>
+           <button onClick={toggleNetwork} className={`px-2 py-1 rounded text-white ${isOnline ? 'bg-green-600' : 'bg-red-600'}`}>
+             {isOnline ? 'WiFi: Connected' : 'WiFi: Offline'}
+           </button>
+         </div>
+         <button onClick={addOrder} className="w-full py-12 border-2 border-dashed border-zinc-700 hover:border-zinc-500 text-zinc-400 rounded-xl flex items-center justify-center font-bold text-lg">
+           + Add POS Order
+         </button>
+         <div className="pt-4 text-zinc-400">
+           <strong>localStorage Queue:</strong> {queue.length} pending orders
+         </div>
+         <div className="flex gap-2 flex-wrap">
+           {queue.map(q => <span key={q} className="bg-yellow-500/20 text-yellow-500 px-2 py-1 rounded border border-yellow-500/30">{q}</span>)}
+         </div>
       </div>
 
-      {/* JSON-RPC console stream */}
-      <div className="flex flex-col h-[300px] bg-black rounded-lg border border-zinc-900 overflow-hidden">
-        <div className="px-4 py-2 bg-zinc-900 text-zinc-400 font-bold border-b border-zinc-850 flex justify-between items-center text-xxs">
-          <span>JSON-RPC FRAME INSPECTOR</span>
-          <span>Client: Model-Context-Client v1</span>
-        </div>
-
-        <div className="flex-1 p-4 overflow-y-auto space-y-3 font-mono text-[10px] text-zinc-400">
-          {logs.length > 0 ? (
-            logs.map((log, i) => (
-              <div key={i} className="flex gap-2">
-                <span className="text-zinc-700">&gt;&gt;</span>
-                <span className={log.includes('SEND') ? 'text-blue-400' : log.includes('RECV') ? 'text-green-400 font-bold' : ''}>
-                  {log}
-                </span>
-              </div>
-            ))
-          ) : (
-            <div className="text-zinc-650 italic text-center py-16">
-              Click a protocol method to trigger dynamic Stdin JSON-RPC request-response exchanges.
+      <div className="bg-black border border-zinc-900 rounded p-4 h-[350px] overflow-y-auto">
+        <div className="text-zinc-500 mb-2 font-bold tracking-widest border-b border-zinc-900 pb-2">SUPABASE CLOUD DB (Row-Level Security)</div>
+        <div className="space-y-2 mt-4">
+          {supabaseDB.map(db => (
+            <div key={db} className="bg-green-500/10 text-green-400 p-2 rounded border border-green-500/20 flex justify-between items-center">
+              <span>{db}</span>
+              <span className="text-[10px] bg-green-500/20 px-1 rounded">SYNCED</span>
             </div>
-          )}
+          ))}
+          {supabaseDB.length === 0 && <div className="text-zinc-700 italic">No orders in cloud DB...</div>}
         </div>
+      </div>
+    </div>
+  )
+}
+
+
+// 5. OPEN SOURCE DIAGNOSTICS SANDBOX MODULE
+// ----------------------------------------------------
+function OpenSourceSandbox() {
+  const [logs, setLogs] = useState<string[]>([])
+  
+  const runJanitor = () => {
+    setLogs(['[K8s-SIG-WINDOWS] Initiating Azure AD Janitor Script...'])
+    setTimeout(() => setLogs(prev => [...prev, 'Scanning for dangling E2E resource groups...']), 500)
+    setTimeout(() => setLogs(prev => [...prev, 'Found 14 orphaned identities from failed CI runs.']), 1200)
+    setTimeout(() => setLogs(prev => [...prev, 'Purging resources to restore quota...']), 1800)
+    setTimeout(() => setLogs(prev => [...prev, 'SUCCESS: CI pipeline unblocked.']), 2500)
+  }
+
+  const runTriage = () => {
+    setLogs(['[SUPABASE] Initiating PostgreSQL Privilege Triage...'])
+    setTimeout(() => setLogs(prev => [...prev, 'Scanning roles for unauthorized escalation paths...']), 500)
+    setTimeout(() => setLogs(prev => [...prev, 'WARN: Found public schema grant anomaly.']), 1200)
+    setTimeout(() => setLogs(prev => [...prev, 'Executing automated REVOKE reconciliation...']), 1800)
+    setTimeout(() => setLogs(prev => [...prev, 'SUCCESS: Privilege leak secured. DNS healthy.']), 2500)
+  }
+
+  return (
+    <div className="flex flex-col gap-6 font-mono text-xs md:text-sm text-purple-500">
+      <div className="flex gap-4">
+        <button onClick={runJanitor} className="flex-1 py-3 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 rounded font-bold transition-colors">
+          Run Kubernetes Azure Janitor
+        </button>
+        <button onClick={runTriage} className="flex-1 py-3 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 rounded font-bold transition-colors">
+          Run Supabase Auto-Triage
+        </button>
+      </div>
+      <div className="bg-black border border-zinc-900 rounded p-4 h-[250px] overflow-y-auto">
+        <div className="text-zinc-500 mb-2 font-bold tracking-widest border-b border-zinc-900 pb-2">DIAGNOSTIC TERMINAL</div>
+        {logs.map((log, i) => (
+          <div key={i} className={`mb-1 ${log.includes('SUCCESS') ? 'text-green-400' : log.includes('WARN') ? 'text-yellow-400' : 'text-purple-400'}`}>
+            &gt; {log}
+          </div>
+        ))}
       </div>
     </div>
   )

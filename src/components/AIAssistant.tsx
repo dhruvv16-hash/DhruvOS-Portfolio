@@ -15,16 +15,16 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: 'ai',
-      text: "System initialized. I've indexed Dhruv's entire engineering footprint. Ask me about system architecture, RAG agent loops, quantitative trading systems, SaaS, or Vue stale-state debugging.",
+      text: "System initialized. Ask me about system architecture, Agentic AI, multi-tenant SaaS, computer vision ensembles, or open-source PRs.",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   
   // Conversational memory hooks
-  const [memory, setMemory] = useState({
+  const [, setMemory] = useState({
     discussedAgents: false,
     discussedFintech: false,
     discussedSaaS: false
@@ -38,7 +38,12 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
   ]
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      })
+    }
   }, [messages, isTyping])
 
   const handleSend = (text: string) => {
@@ -71,47 +76,52 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
 
   const generateResponse = (query: string): string => {
     const q = query.toLowerCase()
-    
-    // Check suggestions / direct prompts
-    if (q.includes('agent') || q.includes('rag') || q.includes('langgraph') || q.includes('vector') || q === 'agents') {
-      const prefix = memory.discussedFintech 
-        ? "Connecting back to your question on fintech: in InvestorGPT, we combine financial APIs with semantic vector search. "
-        : memory.discussedSaaS
-        ? "Adding to our discussion about SaaS apps: AI agents form the intelligent core of modern SaaS. "
-        : ""
-      
+
+    if (q.includes('agent') || q.includes('ai') || q.includes('gpt') || q === 'agents' || q.includes('investorgpt')) {
       setMemory(prev => ({ ...prev, discussedAgents: true }))
-      return prefix + "Yes, I build robust RAG and reasoning agents. In my InvestorGPT project, I designed a dual-agent layout: a Retrieval Agent chunked and indexed SEC filings in Pinecone DB, and a Synthesis Agent verified LLM replies against original text indices, resulting in a 90% drop in hallucinations compared to naive LLM setups."
+      return "Yes, Dhruv engineered InvestorGPT. It's a 7-agent orchestration pipeline leveraging Agentic AI. The system uses dedicated agents (financial-ingestion, valuation, technical, sentiment) that execute a debate-and-consensus workflow to reconcile contradictory market signals into one final verdict. It's built with Next.js, FastAPI, Python, and SQLAlchemy, and strictly implements quantitative scoring models like the Piotroski F-Score and MPT portfolio simulations."
+    }
+    
+    if (q.includes('accident') || q.includes('vision') || q.includes('machine learning') || q.includes('ml')) {
+      return "Dhruv built AccidentZero AI, a hybrid predictive and computer-vision system. It features a 5-model ensemble (XGBoost, LightGBM, CatBoost) to score real-time accident risk from operational metrics, fused seamlessly with a CV pipeline designed for PPE-violation and scene-risk detection, entirely built using Python and FastAPI."
     }
 
-    if (q.includes('fintech') || q.includes('trading') || q.includes('quant') || q.includes('backtest') || q === 'fintech') {
-      const prefix = memory.discussedAgents 
-        ? "Connecting back to the retrieval patterns in InvestorGPT: my quantitative systems use real-time market streams. "
-        : ""
-      
+    if (q.includes('fintech') || q.includes('trade') || q.includes('crypto') || q === 'fintech' || q.includes('deltabridge')) {
       setMemory(prev => ({ ...prev, discussedFintech: true }))
-      return prefix + "Yes. I designed a multi-timeframe ETH/USD trading indicator in Pine Script using UT Bot Alerts, Linear Regression lines, and ADX filters. I backtested it across 742 historical candle sets to verify Profit Factors (achieved 1.84) and control drawdowns. I also wrote a Python middleware to dispatch TradingView webhook orders to the Crypto.com API."
+      return "Absolutely. He built DeltaBridge, an algorithmic trading bot specifically for ETH/USD. He designed a multi-timeframe strategy in Pine Script to aggressively suppress false entries. The system communicates via a custom Python/Flask bridge from TradingView to Delta Exchange through Crypto APIs, running completely automated 24/7 execution backed by a SQLite ledger."
     }
 
-    if (q.includes('saas') || q.includes('web') || q.includes('chrome') || q.includes('extension') || q === 'saas') {
+    if (q.includes('saas') || q.includes('web') || q.includes('vendoros') || q === 'saas') {
       setMemory(prev => ({ ...prev, discussedSaaS: true }))
-      return "Yes. I build full-stack SaaS. Recently I shipped a Chrome Extension + Spring Boot AI Email Writer. It uses DOM observers (MutationObserver) to inject an 'AI Reply' button directly into Gmail's inbox page, dispatching email chains securely to a Java Spring backend that queries Google Gemini API for contextual responses."
+      return "Yes. Dhruv recently shipped VendorOS, a production multi-tenant Food-Tech SaaS and POS PWA. He engineered an offline-first sync mechanism utilizing localStorage queues that securely flush to Supabase upon reconnection, preventing any order loss. It enforces strict PostgreSQL Row-Level Security for tenant isolation, and automatically handles orders via WhatsApp Cloud API webhooks validated mathematically through SHA-256 HMAC signatures. Stack: Next.js, React, TypeScript, Supabase, PostgreSQL."
+    }
+    
+    if (q.includes('openbb') || q.includes('poetry') || q.includes('package')) {
+      return "For OpenBB Core, Dhruv merged a crucial pull request resolving deep Poetry packaging conflicts between core modules. This eliminated severe installation failures on OS package managers that enforce strict file ownership, streamlining OpenBB deployments for finance researchers."
+    }
+    
+    if (q.includes('kubernetes') || q.includes('k8s') || q.includes('azure')) {
+      return "Within the Kubernetes sig-windows open source community, Dhruv fixed End-to-End (E2E) CI pipeline failures by writing a robust Python janitor script to correctly clean up dangling Azure AD resources that were exhausting test-runner quotas."
     }
 
     if (q.includes('stack') || q.includes('technology') || q.includes('expert') || q.includes('skills') || q === 'stack') {
-      return "Dhruv's technical stack is: Expert in Python, Spring Boot, FastAPI, React, and C++. Advanced in Docker, SQL, TradingView Pine Script, Git CI/CD, and TypeScript/Vue.js. Currently learning LangGraph, Agentic AI, MCP (Model Context Protocol), and Rust."
+      return "I've fetched and synced data directly from Dhruv's latest PDF resume and github.com/dhruvv16-hash. His core stack is: Expert in Python, Next.js, React, TypeScript, FastAPI, and PostgreSQL/Supabase. Advanced in Spring Boot, Docker & Kubernetes, Machine Learning (XGBoost, LightGBM), and C++/Java. He's also expanding into Agentic AI workflows."
+    }
+    
+    if (q.includes('data') || q.includes('source') || q.includes('fetch') || q.includes('resume') || q.includes('github') || q.includes('sync')) {
+      return "All my responses are rigorously grounded. I've fetched and synced data from Dhruv's latest PDF resume and his GitHub profile (github.com/dhruvv16-hash). I do not hallucinate external details."
     }
 
-    if (q.includes('hire') || q.includes('resume') || q.includes('work') || q.includes('contact')) {
-      return "To download Dhruv's resume, you can scroll to the specs section or toggle 'Recruiter Mode' at the top of the page. You can reach out directly via the Connect Terminal at the bottom of the page, or email him at dhruvvira17@gmail.com."
+    if (q.includes('hire') || q.includes('contact') || q.includes('email') || q.includes('reach')) {
+      return "To download Dhruv's latest PDF resume, you can toggle 'Recruiter Mode' at the top of the page. You can reach out directly via dhruvvira17@gmail.com or call +91 9303000832."
     }
 
     if (q.includes('omega') || q.includes('open source') || q.includes('contribution') || q.includes('gsoc')) {
-      return "I am an active contributor to omegaUp (Vue 3, Jest, PHP). I resolved an admin page stale-state bug by replacing static payloads with reactive Vue 3 refs, ensuring out-of-sync tabs update instantly. I also wrote debounced search controllers to eliminate concurrency race conditions on concurrent API responses."
+      return "Dhruv is an active contributor to omegaUp. He merged a production PR fixing a severe stale-state UI bug in their Vue 3 layer, and he authored a comprehensive GSoC 2026 proposal. He also contributed automated triage scripts for PostgreSQL privilege-leaks and DNS-outages at Supabase."
     }
 
     // Default fallback
-    return "I am Dhruv's OS concierge. I can explain his engineering principles, SaaS capabilities, Pine Script trading strategies, and open-source contributions. What specific project or engineering skill can I explain for you?"
+    return "I am Dhruv's OS concierge. I've fetched and synced data from Dhruv's latest PDF resume and github.com/dhruvv16-hash to accurately answer your questions. I can explain his SaaS capabilities (VendorOS), ML systems (AccidentZero, InvestorGPT), Trading bots (DeltaBridge), or open-source PRs. What would you like to know?"
   }
 
   return (
@@ -141,7 +151,7 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
           </div>
 
           {/* Messages Stream */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 font-mono text-xs md:text-sm">
+          <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 font-mono text-xs md:text-sm">
             {messages.map((msg, index) => (
               <div 
                 key={index} 
@@ -183,7 +193,6 @@ export function AIAssistant({ onInteraction }: AIAssistantProps) {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Quick Suggestions Buttons */}

@@ -55,15 +55,38 @@ export function Contact({ onFormSubmitted }: ContactProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simulate pipeline encryption transmission
-    await new Promise((resolve) => setTimeout(resolve, 1200))
-    
-    setIsSubmitting(false)
-    setFormData({ name: '', email: '', message: '' })
-    setStep(1)
-    toast.success('Secure briefing dispatched successfully!')
-    onFormSubmitted() // Telemetry trigger
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/dhruvvira17@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Portfolio Briefing from ${formData.name}`,
+          _template: 'table'
+        })
+      })
+
+      if (response.ok) {
+        toast.success('Briefing dispatched! Email sent successfully.')
+      } else {
+        throw new Error('FormSubmit AJAX failed')
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      window.location.href = `mailto:dhruvvira17@gmail.com?subject=Briefing%20from%20${encodeURIComponent(formData.name)}&body=Name:%20${encodeURIComponent(formData.name)}%0AEmail:%20${encodeURIComponent(formData.email)}%0A%0AMessage:%0A${encodeURIComponent(formData.message)}`
+      toast.info('Opened mail client to send briefing as fallback.')
+    } finally {
+      setIsSubmitting(false)
+      setFormData({ name: '', email: '', message: '' })
+      setStep(1)
+      onFormSubmitted()
+    }
   }
 
   const contactInfo = [
@@ -74,7 +97,7 @@ export function Contact({ onFormSubmitted }: ContactProps) {
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/dhruvv16-hash', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/dhruv-mayur-vira-5428b031b', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/dhruv-vira-33bb19439', label: 'LinkedIn' },
   ]
 
   return (

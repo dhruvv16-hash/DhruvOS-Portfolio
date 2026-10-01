@@ -1,4 +1,5 @@
 import React, { Suspense, useState, useEffect } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { Hero } from './sections/Hero'
 import { InteractiveDesk } from './sections/InteractiveDesk'
@@ -22,6 +23,7 @@ import { Toaster, toast } from 'sonner'
 import { Download, ExternalLink } from 'lucide-react'
 
 function App() {
+  const navigate = useNavigate()
   const [booting, setBooting] = useState(true)
   const [isCyberMode, setIsCyberMode] = useState(true)
   const [isRecruiterMode, setIsRecruiterMode] = useState(false)
@@ -85,7 +87,14 @@ function App() {
 
   const trackResumeDownloaded = () => {
     setTelemetry((prev) => ({ ...prev, resumeDownloaded: true }))
-    toast.success('Resume download initiated.')
+    toast.success('Downloading Dhruv_Vira_Resume.pdf...')
+
+    const link = document.createElement('a')
+    link.href = '/Dhruv_Vira_Resume.pdf'
+    link.download = 'Dhruv_Vira_Resume.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   const toggleRecruiterMode = () => {
@@ -112,18 +121,42 @@ function App() {
     incrementCommands()
     if (action.startsWith('scroll-')) {
       const targetId = action.replace('scroll-', '')
-      const el = document.getElementById(targetId)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' })
+      const routeMap: Record<string, string> = {
+        'assistant': '/concierge',
+        'desk': '/workspace',
+        'sandbox': '/sandbox-lab',
+        'build-logs': '/build-logs',
+        'specs': '/tech-specs',
+        'connect': '/connect'
+      }
+      if (routeMap[targetId]) {
+        navigate(routeMap[targetId])
       }
     } else if (action === 'open-github') {
       window.open('https://github.com/dhruvv16-hash', '_blank')
     } else if (action === 'download-resume') {
       trackResumeDownloaded()
-      window.open('/Dhruv_Resume_ATS_Optimized_1.docx')
     } else if (action === 'reboot') {
       localStorage.removeItem('dhruvos_booted')
       window.location.reload()
+    } else if (action === 'matrix-mode') {
+      document.body.style.filter = 'hue-rotate(90deg) contrast(1.2)'
+      toast.success('Matrix mode engaged.')
+    } else if (action === 'hire-now') {
+      import('canvas-confetti').then((confetti) => {
+        confetti.default({ particleCount: 150, spread: 70, origin: { y: 0.6 } })
+      })
+      navigate('/connect')
+    } else if (action === 'print-resume') {
+      toast.info('Terminal print function activated.', { description: 'ASCII Resume loaded.' })
+      console.log(`
+      ========================================
+                 DHRUV VIRA RESUME
+      ========================================
+      Email: dhruvvira17@gmail.com
+      Skills: Python, Next.js, FastAPI, ML
+      ========================================
+      `)
     }
   }
 
@@ -193,6 +226,41 @@ function App() {
     printWindow.document.close()
   }
 
+  // Ensure page starts at the very top (Hero section) on load / after boot sequence
+  useEffect(() => {
+    if (!booting) {
+      if (typeof window !== 'undefined') {
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual'
+        }
+
+        // Clear any auto-scrolling hash from URL on initial landing
+        if (window.location.hash) {
+          window.history.replaceState(null, '', window.location.pathname)
+        }
+
+        const startTime = performance.now()
+        let frameId: number
+
+        const lockTop = () => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          document.documentElement.scrollTop = 0
+          document.body.scrollTop = 0
+
+          if (performance.now() - startTime < 600) {
+            frameId = requestAnimationFrame(lockTop)
+          }
+        }
+
+        frameId = requestAnimationFrame(lockTop)
+
+        return () => {
+          if (frameId) cancelAnimationFrame(frameId)
+        }
+      }
+    }
+  }, [booting])
+
   // Trigger 100% exploration completion notification once
   useEffect(() => {
     if (progress === 100) {
@@ -249,12 +317,14 @@ function App() {
               </p>
               
               <div className="pt-4 flex flex-wrap gap-4 select-none">
-                <button
+                <a
+                  href="/Dhruv_Vira_Resume.pdf"
+                  download="Dhruv_Vira_Resume.pdf"
                   onClick={trackResumeDownloaded}
                   className="px-4 py-2 bg-white hover:bg-zinc-200 text-black text-xs font-semibold rounded flex items-center gap-1.5 font-sans"
                 >
-                  <Download className="w-3.5 h-3.5" /> Download Resume (DOCX)
-                </button>
+                  <Download className="w-3.5 h-3.5" /> Download Resume (PDF)
+                </a>
                 <a
                   href="https://github.com/dhruvv16-hash"
                   target="_blank"
@@ -355,101 +425,60 @@ function App() {
           </div>
         ) : (
           <main className="pt-28">
-            {/* Identity Layer */}
-            <Hero
-              onExplore={() => {
-                const el = document.getElementById('assistant')
-                el?.scrollIntoView({ behavior: 'smooth' })
-              }}
-              onSkip={() => {
-                const el = document.getElementById('build-logs')
-                el?.scrollIntoView({ behavior: 'smooth' })
-              }}
-              onHire={() => {
-                const el = document.getElementById('connect')
-                el?.scrollIntoView({ behavior: 'smooth' })
-              }}
-            />
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <Hero
+                    onExplore={() => navigate('/concierge')}
+                    onSkip={() => navigate('/build-logs')}
+                    onHire={() => navigate('/connect')}
+                  />
+                  {/* Keep some elements on home page if needed, or just hero */}
+                  <Suspense fallback={<div className="py-12 bg-zinc-950/20 text-center text-xs text-zinc-650">Loading...</div>}>
+                     <EngineeringPrinciples />
+                  </Suspense>
+                </>
+              } />
+              
+              <Route path="/concierge" element={
+                <Suspense fallback={<div className="py-12 bg-zinc-950/20 text-center text-xs text-zinc-650">Loading...</div>}>
+                  <AIAssistant onInteraction={incrementAIQuestions} />
+                </Suspense>
+              } />
 
-            {/* Conversation Layer */}
-            <Suspense fallback={
-              <div className="py-12 bg-zinc-950/20 border-b border-zinc-900 flex flex-col items-center justify-center font-mono text-zinc-650 text-xs">
-                <div className="w-4 h-4 border border-zinc-800 border-t-zinc-600 rounded-full animate-spin mb-2" />
-                <span>SYS_LOADING_MODULE: AI_CONCIERGE...</span>
-              </div>
-            }>
-              <AIAssistant onInteraction={incrementAIQuestions} />
-            </Suspense>
+              <Route path="/workspace" element={
+                <InteractiveDesk
+                  onInteraction={trackDeskClick}
+                  isCyberMode={isCyberMode}
+                  onToggleTheme={() => setIsCyberMode(!isCyberMode)}
+                />
+              } />
 
-            {/* Workspace layer */}
-            <InteractiveDesk
-              onInteraction={trackDeskClick}
-              isCyberMode={isCyberMode}
-              onToggleTheme={() => setIsCyberMode(!isCyberMode)}
-            />
+              <Route path="/sandbox-lab" element={
+                <Suspense fallback={<div className="py-12 bg-zinc-950/20 text-center text-xs text-zinc-650">Loading...</div>}>
+                  <ClientSolutions />
+                  <ProductPlayground onSandboxRun={trackSandboxRun} />
+                </Suspense>
+              } />
 
-            {/* Capabilities mapping layer */}
-            <Suspense fallback={
-              <div className="py-12 bg-zinc-950/20 border-b border-zinc-900 flex flex-col items-center justify-center font-mono text-zinc-650 text-xs">
-                <div className="w-4 h-4 border border-zinc-800 border-t-zinc-600 rounded-full animate-spin mb-2" />
-                <span>SYS_LOADING_MODULE: SOLUTIONS_MAPPING...</span>
-              </div>
-            }>
-              <ClientSolutions />
-            </Suspense>
+              <Route path="/build-logs" element={
+                <Suspense fallback={<div className="py-12 bg-zinc-950/20 text-center text-xs text-zinc-650">Loading...</div>}>
+                  <CaseStudies onNodeClicked={trackNodeInspected} />
+                  <OpenSourceWall />
+                  <JourneyTimeline />
+                </Suspense>
+              } />
 
-            {/* Evidence Sandboxes layer */}
-            <Suspense fallback={
-              <div className="py-12 bg-zinc-950/20 border-b border-zinc-900 flex flex-col items-center justify-center font-mono text-zinc-650 text-xs">
-                <div className="w-4 h-4 border border-zinc-800 border-t-zinc-600 rounded-full animate-spin mb-2" />
-                <span>SYS_LOADING_MODULE: EVIDENCE_SANDBOXES...</span>
-              </div>
-            }>
-              <ProductPlayground onSandboxRun={trackSandboxRun} />
-            </Suspense>
+              <Route path="/tech-specs" element={
+                <Suspense fallback={<div className="py-12 bg-zinc-950/20 text-center text-xs text-zinc-650">Loading...</div>}>
+                  <EngineeringPrinciples />
+                </Suspense>
+              } />
 
-            {/* Clickable Architecture & Case studies */}
-            <Suspense fallback={
-              <div className="py-12 bg-zinc-950/20 border-b border-zinc-900 flex flex-col items-center justify-center font-mono text-zinc-650 text-xs">
-                <div className="w-4 h-4 border border-zinc-800 border-t-zinc-600 rounded-full animate-spin mb-2" />
-                <span>SYS_LOADING_MODULE: CASE_STUDIES...</span>
-              </div>
-            }>
-              <CaseStudies onNodeClicked={trackNodeInspected} />
-            </Suspense>
-
-            {/* Open Source Wall */}
-            <Suspense fallback={
-              <div className="py-12 bg-zinc-950/20 border-b border-zinc-900 flex flex-col items-center justify-center font-mono text-zinc-650 text-xs">
-                <div className="w-4 h-4 border border-zinc-800 border-t-zinc-600 rounded-full animate-spin mb-2" />
-                <span>SYS_LOADING_MODULE: OPEN_SOURCE_WALL...</span>
-              </div>
-            }>
-              <OpenSourceWall />
-            </Suspense>
-
-            {/* Skill Tiers & principles */}
-            <Suspense fallback={
-              <div className="py-12 bg-zinc-950/20 border-b border-zinc-900 flex flex-col items-center justify-center font-mono text-zinc-650 text-xs">
-                <div className="w-4 h-4 border border-zinc-800 border-t-zinc-600 rounded-full animate-spin mb-2" />
-                <span>SYS_LOADING_MODULE: TECH_SPECS...</span>
-              </div>
-            }>
-              <EngineeringPrinciples />
-            </Suspense>
-
-            {/* Journey Logs */}
-            <Suspense fallback={
-              <div className="py-12 bg-zinc-950/20 border-b border-zinc-900 flex flex-col items-center justify-center font-mono text-zinc-650 text-xs">
-                <div className="w-4 h-4 border border-zinc-800 border-t-zinc-600 rounded-full animate-spin mb-2" />
-                <span>SYS_LOADING_MODULE: JOURNEY_LOG...</span>
-              </div>
-            }>
-              <JourneyTimeline />
-            </Suspense>
-
-            {/* Contact Console form */}
-            <Contact onFormSubmitted={incrementCommands} />
+              <Route path="/connect" element={
+                <Contact onFormSubmitted={incrementCommands} />
+              } />
+            </Routes>
           </main>
         )}
 

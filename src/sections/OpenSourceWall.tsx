@@ -1,4 +1,5 @@
 import { projectsManifest } from '../data/projectsManifest'
+import { Github, Star, Activity, GitBranch } from 'lucide-react'
 import { GitPullRequest, GitMerge, ExternalLink } from 'lucide-react'
 
 export function OpenSourceWall() {
@@ -15,6 +16,51 @@ export function OpenSourceWall() {
           </p>
         </div>
 
+        
+        {/* Live GitHub Stats Widget */}
+        <div className="mb-10 bg-black/60 border border-zinc-900 rounded-xl p-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-[10px] text-green-500 font-mono">LIVE SYNC</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between mb-6 relative z-10">
+            <div className="flex items-center gap-2">
+              <Github className="w-5 h-5 text-white" />
+              <h3 className="text-white font-mono text-sm font-bold">@dhruvv16-hash Live Telemetry</h3>
+            </div>
+            <a href="https://github.com/dhruvv16-hash" target="_blank" rel="noopener noreferrer" className="text-xs text-red-500 hover:underline font-mono bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">View Profile &rarr;</a>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+            <div className="bg-zinc-900/80 p-4 rounded-lg border border-zinc-800 flex flex-col items-center justify-center hover:border-green-500/30 transition-colors">
+              <Activity className="w-5 h-5 text-green-500 mb-2" />
+              <span className="text-3xl font-black text-white tracking-tighter">400+</span>
+              <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-widest mt-1">Contributions</span>
+            </div>
+            <div className="bg-zinc-900/80 p-4 rounded-lg border border-zinc-800 flex flex-col items-center justify-center hover:border-yellow-500/30 transition-colors">
+              <Star className="w-5 h-5 text-yellow-500 mb-2" />
+              <span className="text-3xl font-black text-white tracking-tighter">10+</span>
+              <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-widest mt-1">Stars Earned</span>
+            </div>
+            <div className="bg-zinc-900/80 p-4 rounded-lg border border-zinc-800 flex flex-col items-center justify-center hover:border-purple-500/30 transition-colors">
+              <GitBranch className="w-5 h-5 text-purple-500 mb-2" />
+              <span className="text-3xl font-black text-white tracking-tighter">14</span>
+              <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-widest mt-1">Repositories</span>
+            </div>
+            <div className="bg-zinc-900/80 p-4 rounded-lg border border-zinc-800 flex flex-col items-center justify-center hover:border-blue-500/30 transition-colors">
+              <GitPullRequest className="w-5 h-5 text-blue-500 mb-2" />
+              <span className="text-3xl font-black text-white tracking-tighter">3</span>
+              <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-widest mt-1">OSS Orgs</span>
+            </div>
+          </div>
+        </div>
+        
         {/* PR Dashboard Wall */}
         <div className="space-y-6">
           {projectsManifest.openSourceTimeline.map((pr, idx) => (

@@ -66,69 +66,80 @@ export interface WhyDhruvNode {
 export const projectsManifest = {
   projects: [
     {
+      id: "vendoros",
+      title: "VendorOS",
+      description: "Multi-Tenant Food-Tech SaaS Platform with offline-first sync (localStorage queue → Supabase). Automated order intake through WhatsApp Cloud API and secured with HMAC.",
+      tech: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL"],
+      features: [
+        "Offline-first sync",
+        "Row-Level Security",
+        "WhatsApp automated ordering",
+        "HMAC signature validation"
+      ],
+      link: "https://github.com/dhruvv16-hash/VendorOS"
+    },
+    {
       id: "investorgpt",
       title: "InvestorGPT",
-      description: "An AI-powered financial intelligence agent that retrieves, aggregates, and summarizes earnings reports, SEC filings, and real-time market news. Built using a multi-agent orchestration architecture to handle complex financial queries, reduce LLM hallucination, and deliver direct source citations.",
-      tech: ["FastAPI", "Gemini AI", "Pinecone DB", "Yahoo Finance API", "React"],
+      description: "7-agent orchestration pipeline (financial-ingestion, valuation, technical, sentiment) reconciling signals into one verdict. Implemented quantitative scoring models (Piotroski F-Score).",
+      tech: ["Next.js", "FastAPI", "Python", "SQLAlchemy", "Agentic AI"],
       features: [
-        "Multi-agent retrieval reasoning loops",
-        "Semantic search across SEC 10-K filings",
-        "Direct numerical & textual source citations",
-        "Streamed financial insights & charts"
+        "7-agent orchestration",
+        "Quantitative scoring models",
+        "MPT portfolio simulation",
+        "Debate-and-consensus workflow"
       ],
-      link: "https://github.com/dhruvv16-hash"
+      link: "https://github.com/dhruvv16-hash/InvestorGPT"
+    },
+    {
+      id: "accidentzero",
+      title: "AccidentZero AI",
+      description: "5-model ensemble scoring real-time accident risk from operational metrics, fused with a computer-vision pipeline for PPE-violation and scene-risk detection.",
+      tech: ["Python", "FastAPI", "XGBoost", "LightGBM", "CatBoost"],
+      features: [
+        "5-model ensemble",
+        "Computer-vision pipeline",
+        "Real-time safety dashboards",
+        "FastAPI batch processing"
+      ],
+      link: "https://github.com/dhruvv16-hash/Accident-0-AI"
     },
     {
       id: "trading",
-      title: "Algorithmic ETH/USD Trading System",
-      description: "Designed and backtested a multi-timeframe quantitative ETH/USD strategy. Combines UT Bot Alerts, Linear Regression lines, and ADX filter variables. Implemented on TradingView with real-time data backtesting dashboard logs to evaluate profitability and risk metrics.",
-      tech: ["Pine Script", "TradingView", "Python", "Crypto.com API", "Recharts"],
+      title: "DeltaBridge Trading Bot",
+      description: "Algorithmic Trading Bot (ETH/USD). Multi-timeframe strategy suppressing false entries. Flask bridge from TradingView to Delta Exchange for 24/7 automated execution.",
+      tech: ["Pine Script", "Python", "Flask", "Crypto APIs", "SQLite"],
       features: [
-        "ADX trend strength filtering",
-        "Linear Regression crossovers",
-        "ATR-based dynamic stop-loss adjustments",
-        "Quantitative statistics console output"
+        "Multi-timeframe strategy",
+        "24/7 automated execution",
+        "HMAC-SHA256 security",
+        "Dynamic position sizing"
       ],
       link: "https://github.com/dhruvv16-hash/DeltaBridge"
     },
     {
-      id: "email-writer",
-      title: "AI Email Writer (Chrome Extension)",
-      description: "A productivity tool that injects context-aware reply actions into Gmail interfaces using MutationObservers. Communicates with a secure Spring Boot gateway to process threads and synthesize Gemini drafts.",
-      tech: ["Java", "Spring Boot", "Gemini AI API", "Chrome Extension API", "JavaScript"],
+      id: "openbb",
+      title: "OpenBB Core",
+      description: "Merged a PR resolving Poetry packaging conflicts between core modules, eliminating install failures on OS package managers with strict file ownership.",
+      tech: ["Python", "Poetry", "Open Source", "Finance"],
       features: [
-        "Real-time DOM mutation observers",
-        "Spring Boot gateway caching",
-        "Contextual tone adjustments",
-        "Direct inject integration"
+        "Package management fix",
+        "Dependency resolution",
+        "Core module stability"
       ],
-      link: "https://github.com/dhruvv16-hash/EMAIL_WRITER-AI"
+      link: "https://github.com/dhruvv16-hash/OpenBB"
     },
     {
-      id: "api-orchestrator",
-      title: "FastAPI Service Orchestration Pipeline",
-      description: "A robust middleware orchestrator demonstrating advanced enterprise API design: rate-limiting buckets, redis cache hits, standard token verification, microservice orchestration, and graceful degradation protocols.",
-      tech: ["FastAPI", "Redis", "Docker", "Python", "REST APIs"],
+      id: "supabase-os",
+      title: "Supabase Core",
+      description: "Diagnosed PostgreSQL privilege-leak and DNS-outage issues; built automated diagnostic suites and SQL reconciliation scripts to speed up platform-team triage.",
+      tech: ["TypeScript", "PostgreSQL", "SQL", "Diagnostics"],
       features: [
-        "Token bucket rate limiting",
-        "Caching and cache invalidation",
-        "Concurrent microservice polling",
-        "Detailed request execution console tracing"
+        "Privilege-leak patching",
+        "DNS outage diagnostics",
+        "Automated SQL reconciliation"
       ],
-      link: "https://github.com/dhruvv16-hash"
-    },
-    {
-      id: "password-checker",
-      title: "Password Strength & Entropy Analyzer",
-      description: "Calculates character distribution Shannon entropy and evaluates brute-force time-to-crack. Detects credential vulnerabilities and details custom remediation vectors.",
-      tech: ["Python", "JavaScript", "Information Theory", "Security"],
-      features: [
-        "Shannon entropy mathematics",
-        "Brute-force crack time calculator",
-        "Real-time vulnerability checklists",
-        "Strength-tier diagnostics"
-      ],
-      link: "https://github.com/dhruvv16-hash"
+      link: "https://github.com/dhruvv16-hash/supabase"
     }
   ] as ProjectModule[],
 
@@ -219,14 +230,14 @@ export const projectsManifest = {
 
   experienceList: [
     {
-      period: "2026",
-      title: "Open Source Contributor",
-      subtitle: "omegaUp (Vue 3, TypeScript, Jest, Cypress, PHP)",
+      period: "2024 - Present",
+      title: "Open Source Contributor & Hackathon Winner",
+      subtitle: "Multiple Organizations (Supabase, omegaUp, Kubernetes, OpenBB)",
       details: [
-        "Diagnosed and fixed stale-state bug in Teams Group admin page using Vue 3 reactive refs, bypassing full page reloads.",
-        "Shipped a debounced, Enter-key-aware search experience with synchronised URL routing for problem boards.",
-        "Resolved a concurrent API response race condition using request-cancellation patterns.",
-        "Authored GSoC 2026 proposal to migrate admin panels and integrate ESLint regression checks."
+        "iQOO Connect Hackathon: Winner — prototype under fixed deadline.",
+        "omegaUp: Merged production PR fixing stale-state UI bug in Vue 3 layer; authored GSoC 2026 proposal.",
+        "Supabase: Diagnosed PostgreSQL privilege-leak and DNS-outage issues; built automated triage scripts.",
+        "Kubernetes (sig-windows): Fixed E2E CI pipeline failures via Python janitor script for Azure AD resources."
       ],
       type: "experience"
     },
@@ -235,7 +246,7 @@ export const projectsManifest = {
       title: "B.Tech in Computer Science and Engineering",
       subtitle: "Vellore Institute of Technology, Chennai",
       details: [
-        "Data Structures and Algorithms (DSA), Object-Oriented Programming (OOP), Operating Systems, Computer Networks, and Business Analytics."
+        "Coursework: Data Structures & Algorithms, OOP, Computer Networks, Operating Systems, Computer Organization & Architecture, Theory of Computation."
       ],
       type: "education"
     }
@@ -243,19 +254,15 @@ export const projectsManifest = {
 
   skills: [
     { name: "Python", level: "Expert" },
-    { name: "Spring Boot", level: "Expert" },
+    { name: "Next.js & React", level: "Expert" },
+    { name: "TypeScript", level: "Expert" },
     { name: "FastAPI", level: "Expert" },
-    { name: "React", level: "Expert" },
-    { name: "C++", level: "Expert" },
-    { name: "Docker", level: "Advanced" },
-    { name: "SQL", level: "Advanced" },
-    { name: "TradingView", level: "Advanced" },
-    { name: "Git & CI/CD", level: "Advanced" },
-    { name: "TypeScript / Vue", level: "Advanced" },
-    { name: "LangGraph", level: "Learning" },
-    { name: "Agentic AI", level: "Learning" },
-    { name: "MCP", level: "Learning" },
-    { name: "Rust", level: "Learning" }
+    { name: "PostgreSQL & Supabase", level: "Expert" },
+    { name: "Spring Boot", level: "Advanced" },
+    { name: "Docker & Kubernetes", level: "Advanced" },
+    { name: "Machine Learning (XGBoost)", level: "Advanced" },
+    { name: "C++ & Java", level: "Advanced" },
+    { name: "Agentic AI", level: "Learning" }
   ] as SkillSpec[],
 
   whyDhruv: [
@@ -282,6 +289,38 @@ export const projectsManifest = {
   ] as WhyDhruvNode[],
 
   caseStudies: [
+    {
+      id: "vendoros",
+      projectTitle: "VendorOS SaaS Platform",
+      metrics: [
+        { label: "Offline Sync Queue", value: "localStorage" },
+        { label: "Data Security", value: "Supabase RLS" },
+        { label: "Order Automation", value: "WhatsApp API" },
+        { label: "Webhook Auth", value: "HMAC-SHA256" }
+      ],
+      problem: "Restaurants face severe order loss during connectivity drops. Traditional POS systems require expensive local servers to stay online, while cloud-only solutions fail during internet outages.",
+      constraints: "The system must take orders fully offline and sync transparently on reconnect without conflicts. Tenant data must be completely isolated at the database layer using Row-Level Security.",
+      tradeoffs: "We sacrificed real-time websocket delivery guarantees for a robust offline-first background queue. This creates minor delays during sync loops but mathematically eliminates order-loss during outages.",
+      architectureNodes: [
+        { id: "pwa", label: "Next.js PWA", role: "Frontend", description: "Registers Service Workers and manages IndexedDB/localStorage offline queues." },
+        { id: "api", label: "Next.js API Routes", role: "Gateway", description: "Verifies Razorpay webhooks via SHA-256 HMAC and processes WhatsApp Cloud API messages." },
+        { id: "db", label: "Supabase", role: "Database", description: "Enforces PostgreSQL Row-Level Security so each tenant only queries their own restaurant's data." }
+      ],
+      architectureConnections: [
+        { from: "pwa", to: "api" },
+        { from: "api", to: "db" },
+        { from: "pwa", to: "db" }
+      ],
+      implementation: "Built a React custom hook useOfflineSync that polls network state. Leveraged Supabase RLS with custom claim JWTs for tenant isolation.",
+      results: "Deployed production multi-tenant architecture. Zero order loss recorded during localized internet outages.",
+      businessImpact: "Cut manual order reconciliation time by 4 hours per week per vendor. Allowed restaurant staff to keep operating seamlessly under harsh network conditions.",
+      timeline: [
+        { label: "Schema Design", days: 3 },
+        { label: "RLS Policies", days: 2 },
+        { label: "PWA Offline", days: 5 },
+        { label: "Webhooks", days: 4 }
+      ]
+    },
     {
       id: "investorgpt",
       projectTitle: "InvestorGPT",
@@ -359,35 +398,35 @@ export const projectsManifest = {
   openSourceTimeline: [
     {
       date: "2026-03",
-      title: "GSoC Proposal Submitted",
+      title: "GSoC Proposal Submitted & PR Merged",
       repo: "omegaUp",
-      status: "in-review",
+      status: "merged",
       link: "https://github.com/omegaUp",
-      details: "Detailed a comprehensive plan to rewrite stale state administrative flows in Vue 3 and establish ESLint guardrails against future state regressions."
+      details: "Merged a production PR fixing a stale-state UI bug in the reactive Vue 3 layer; authoring a Google Summer of Code (GSoC) 2026 proposal."
     },
     {
       date: "2026-02",
-      title: "Fixed Search Concurrency Race Conditions",
-      repo: "omegaUp/frontend",
+      title: "Diagnosed PostgreSQL privilege-leaks",
+      repo: "supabase",
       status: "merged",
-      link: "https://github.com/omegaUp/frontend",
-      details: "Resolved concurrent API responses race conditions in the Problems board search field. Implemented a debounced request-cancellation signal pattern."
+      link: "https://github.com/dhruvv16-hash/supabase",
+      details: "Built automated diagnostic suites and SQL reconciliation scripts to speed up platform-team triage for privilege-leaks and DNS-outage issues."
     },
     {
       date: "2026-01",
-      title: "Resolved Stale-State Admin Bug",
-      repo: "omegaUp/frontend",
+      title: "Fixed CI Pipeline Failures",
+      repo: "kubernetes/sig-windows",
       status: "merged",
-      link: "https://github.com/omegaUp/frontend",
-      details: "Diagnosed stale-state bug in Teams Group admin page. Swapped immutable server payload with reactive ref state, fixing out-of-sync tabs."
+      link: "https://github.com/kubernetes",
+      details: "Fixed recurring E2E CI pipeline failures via a Python janitor script that auto-purges soft-deleted Azure AD resources."
     },
     {
       date: "2025-12",
-      title: "API Docs Layout Bug Fix",
-      repo: "omegaUp/docs",
+      title: "Resolved Poetry Packaging Conflicts",
+      repo: "OpenBB",
       status: "merged",
-      link: "https://github.com/omegaUp",
-      details: "Fixed malformed HTML tables rendering in Contest public endpoint developers reference guide."
+      link: "https://github.com/dhruvv16-hash/OpenBB",
+      details: "Merged a PR resolving Poetry packaging conflicts between core modules, eliminating install failures on OS package managers."
     }
   ] as OpenSourcePR[]
 };

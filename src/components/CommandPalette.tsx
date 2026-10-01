@@ -19,9 +19,12 @@ export function CommandPalette({ isOpen, onClose, onActionTriggered }: CommandPa
     { name: 'Tech Specs (Skill Radar & Principles)', category: 'Navigation', shortcut: '#specs', action: 'scroll-specs' },
     { name: 'Connect Terminal (Hire / Contact)', category: 'Navigation', shortcut: '#connect', action: 'scroll-connect' },
     { name: 'Open Github Profile', category: 'Action', shortcut: '> github', action: 'open-github' },
-    { name: 'Download Resume (DOCX)', category: 'Action', shortcut: '> resume', action: 'download-resume' },
+    { name: 'Download Resume (PDF)', category: 'Action', shortcut: '> resume', action: 'download-resume' },
     { name: 'Reboot DhruvOS (Show Boot Sequence)', category: 'Action', shortcut: '> reboot', action: 'reboot' },
-    { name: 'Trigger Client solutions grid', category: 'Navigation', shortcut: '#solutions', action: 'scroll-solutions' }
+    { name: 'Trigger Client solutions grid', category: 'Navigation', shortcut: '#solutions', action: 'scroll-solutions' },
+    { name: 'Engage Matrix Mode (Theme Override)', category: 'Easter Egg', shortcut: '> sudo', action: 'matrix-mode' },
+    { name: 'Hire Dhruv (Quick Connect)', category: 'Action', shortcut: '> hire', action: 'hire-now' },
+    { name: 'Print Resume in Terminal', category: 'Easter Egg', shortcut: '> cat resume', action: 'print-resume' }
   ]
 
   const filteredCommands = commands.filter(cmd => 

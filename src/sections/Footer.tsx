@@ -1,16 +1,17 @@
 import { Github, Linkedin, Twitter, Heart } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
   const quickLinks = [
-    { name: 'About', href: '#desk' },
-    { name: 'Skills', href: '#specs' },
-    { name: 'Projects', href: '#sandbox' },
-    { name: 'Contact', href: '#connect' },
+    { name: 'About', href: '/workspace' },
+    { name: 'Skills', href: '/tech-specs' },
+    { name: 'Projects', href: '/build-logs' },
+    { name: 'Contact', href: '/connect' },
   ]
   const socialLinks = [
     { icon: Github, href: 'https://github.com/dhruvv16-hash', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/dhruv-mayur-vira-5428b031b', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/dhruv-vira-33bb19439', label: 'LinkedIn' },
     { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
   ]
 
@@ -27,7 +28,12 @@ export function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-red-500 transition-colors">{link.name}</a>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-muted-foreground hover:text-red-500 transition-colors cursor-pointer block"
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>

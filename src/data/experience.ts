@@ -1,17 +1,20 @@
 export const experience = [
   {
-    role: "Open Source Contributor",
-    company: "omegaUp",
-    period: "2026",
-    tech: ["Vue 3", "TypeScript", "Jest", "Cypress", "PHP"],
+    role: "Open Source Contributor & Hackathon Winner",
+    company: "Multiple Organizations",
+    period: "2024 - Present",
+    tech: ["TypeScript", "Python", "PostgreSQL", "Vue 3", "Kubernetes", "Next.js"],
     details: [
-      "Diagnosed and fixed a stale-state bug in the Teams Group admin page by replacing an immutable server-rendered payload with reactive Vue 3 state (ref()), so saved values update instantly across dependent UI tabs instead of requiring a page refresh (PR merged, live in production).",
-      "Shipped a debounced, Enter-key-aware search experience with loading and empty states and URL synchronization for the Problems list page; identified and resolved a race condition in concurrent API responses using a request-cancellation pattern (CI-passing, in review).",
-      "Corrected a malformed table in the platform's public API documentation (Contests endpoint reference) to improve developer-facing accuracy (CI-passing, in review).",
-      "Authored a Google Summer of Code (GSoC) 2026 proposal to extend the reactive-state fix across 4+ admin workflows and introduce a static-analysis (ESLint) guardrail against regressions, backed by a full Jest and Cypress testing plan."
+      "iQOO Connect Hackathon: Winner — Certificate of Achievement for building and presenting a working prototype under a fixed deadline.",
+      "omegaUp (Vue.js/TypeScript/PHP): Merged a production PR fixing a stale-state UI bug in the reactive Vue 3 layer; authoring a Google Summer of Code (GSoC) 2026 proposal.",
+      "Supabase: Diagnosed PostgreSQL privilege-leak and DNS-outage issues; built automated diagnostic suites and SQL reconciliation scripts to speed up platform-team triage.",
+      "Kubernetes (sig-windows): Fixed recurring E2E CI pipeline failures via a Python janitor script that auto-purges soft-deleted Azure AD resources.",
+      "OpenBB: Merged a PR resolving Poetry packaging conflicts between core modules, eliminating install failures on OS package managers.",
+      "Kornia (Computer Vision): Fixed edge-case tensor-validation bugs in the PinholeCamera module.",
+      "CaPyCLI (Software Compliance): Built an automated OAuth2 token-refresh lifecycle (Keycloak); refactored auth boilerplate across 16 modules."
     ]
   }
-]
+];
 
 export const education = [
   {
@@ -22,13 +25,12 @@ export const education = [
       "Data Structures and Algorithms",
       "Object-Oriented Programming",
       "Computer Networks",
-      "Business Analytics",
-      "Theory of Computation",
       "Operating Systems",
-      "Computer Organization and Architecture",
+      "Computer Organization & Architecture",
+      "Theory of Computation"
     ],
   },
-]
+];
 
 export const certifications = [
   {
@@ -46,4 +48,4 @@ export const certifications = [
     issuer: "One Roadmap",
     description: "Applied Python, NumPy, and Pandas for data analysis projects.",
   },
-]
+];

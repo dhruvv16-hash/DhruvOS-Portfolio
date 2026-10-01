@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Laptop, Monitor as MonitorIcon, Cpu, Coffee, Phone, BookOpen, Terminal } from 'lucide-react'
+import { Laptop, Monitor as MonitorIcon, Cpu, Award, Phone, BookOpen, Terminal } from 'lucide-react'
 
 interface InteractiveDeskProps {
   onInteraction: (itemId: string) => void
@@ -18,6 +18,8 @@ export function InteractiveDesk({ onInteraction, isCyberMode, onToggleTheme }: I
     'git status: 1 file modified',
     'git add . && git commit -m "fix: team reactives"',
     'Pushing to omegaUp/frontend/main...',
+    'Diagnosing Supabase PostgreSQL privilege-leak [WARN]',
+    'Janitor daemon: auto-purging Azure AD resources (k8s)',
     'handshake: github.com/dhruvv16-hash',
     'Merged PR #682 into main [OK]',
     'Executing Jest unit tests...',
@@ -69,17 +71,36 @@ export function InteractiveDesk({ onInteraction, isCyberMode, onToggleTheme }: I
       title: 'Currently Building',
       subtitle: 'Monitor',
       icon: <MonitorIcon className="w-6 h-6 text-red-500" />,
-      info: 'Flagship Project: InvestorGPT. Developing a multi-agent retrieval loop that chunks SEC 10-K filings and crawls live Yahoo Finance tables to answer complex quantitative requests with verifiable numerical source citations.',
-      cta: 'View Case Study',
-      scrollId: '#build-logs'
+      info: (
+        <div className="space-y-3">
+          <span className="text-white font-bold block border-b border-zinc-800 pb-1">Primary Nodes:</span>
+          <ul className="list-disc pl-4 space-y-2">
+            <li><span className="text-red-400">InvestorGPT:</span> 7-agent orchestration pipeline reconciling signals into a single verdict using Piotroski F-Score models (Next.js, FastAPI, Python).</li>
+            <li><span className="text-red-400">VendorOS:</span> Multi-Tenant SaaS with offline-first localStorage sync & HMAC WhatsApp automation.</li>
+            <li><span className="text-red-400">DeltaBridge:</span> Pine Script multi-timeframe strategy suppressing false entries bridged via Flask to Crypto APIs.</li>
+          </ul>
+        </div>
+      ),
+      cta: 'View Case Studies',
+      scrollId: '#sandbox'
     },
     {
       id: 'laptop',
       title: 'Latest GitHub Commits',
       subtitle: 'Laptop',
       icon: <Laptop className="w-6 h-6 text-blue-500" />,
-      info: 'Active contributor on omegaUp. Merged reactive state fixes solving asynchronous tab desyncs in administration workflows. Shipped debounced request cancellation methods to resolve search concurrency API races.',
-      cta: 'Explore Open Source PRs',
+      info: (
+        <div className="space-y-3">
+          <span className="text-white font-bold block border-b border-zinc-800 pb-1">Open Source PR Log:</span>
+          <ul className="list-disc pl-4 space-y-2">
+            <li><span className="text-blue-400">omegaUp:</span> Merged reactive state fixes (Vue 3 layer) solving severe async tab desyncs in admin workflows. Authored GSoC 2026 proposal.</li>
+            <li><span className="text-blue-400">Supabase:</span> Diagnosed PostgreSQL privilege-leaks and DNS-outages; built automated triage scripts.</li>
+            <li><span className="text-blue-400">Kubernetes (sig-windows):</span> Fixed E2E CI pipeline failures via Python janitor script for Azure AD.</li>
+            <li><span className="text-blue-400">OpenBB Core:</span> Resolved Poetry packaging conflicts across core modules for strict OS managers.</li>
+          </ul>
+        </div>
+      ),
+      cta: 'Explore Open Source Wall',
       scrollId: '#open-source-wall'
     },
     {
@@ -87,26 +108,57 @@ export function InteractiveDesk({ onInteraction, isCyberMode, onToggleTheme }: I
       title: 'Simulated Inference Layer',
       subtitle: 'GPU Engine',
       icon: <Cpu className="w-6 h-6 text-green-500" />,
-      info: 'Deploying client-side cosine similarity recommendations and password Shannon entropy calculations. Visualizes real-time VRAM allocation and neural model routing checks.',
-      cta: 'Open Sandbox Labs',
+      info: (
+        <div className="space-y-3">
+          <span className="text-white font-bold block border-b border-zinc-800 pb-1">AccidentZero AI Core:</span>
+          <p>
+            Deploying a real-time computer vision and operational metric inference pipeline. 
+          </p>
+          <ul className="list-disc pl-4 space-y-1 mt-1">
+            <li><span className="text-green-400">Ensemble:</span> 5-model stack (XGBoost, LightGBM, CatBoost).</li>
+            <li><span className="text-green-400">CV Pipeline:</span> PPE-violation and scene-risk detection.</li>
+            <li><span className="text-green-400">API:</span> High-throughput FastAPI inference endpoint.</li>
+          </ul>
+        </div>
+      ),
+      cta: 'View Machine Learning Specs',
       scrollId: '#sandbox'
     },
     {
-      id: 'coffee',
-      title: 'Current Thoughts & Bio',
-      subtitle: 'Coffee Mug',
-      icon: <Coffee className="w-6 h-6 text-yellow-600" />,
-      info: 'CS Undergrad at VIT Chennai. Passionate about quant financial strategy indicators, rate-limited REST services, and AI architectures. Believes that engineering polish and fast execution are non-negotiable features.',
-      cta: 'Read Philosophy',
-      scrollId: '#specs'
+      id: 'trophy',
+      title: 'Hall of Fame',
+      subtitle: 'Trophies & Certs',
+      icon: <Award className="w-5 h-5 text-yellow-500" />,
+      info: (
+        <div className="space-y-3">
+          <span className="text-white font-bold block border-b border-zinc-800 pb-1">Achievements:</span>
+          <ul className="list-disc pl-4 space-y-2">
+            <li><span className="text-yellow-400">VIT Chennai Hackathon:</span> 1st Place Winner for innovative CV tracking.</li>
+            <li><span className="text-yellow-400">Open Source:</span> Merged PRs into major organizations like omegaUp and Supabase.</li>
+            <li><span className="text-yellow-400">GSoC:</span> High-tier proposal submitted and accepted for rigorous review.</li>
+          </ul>
+        </div>
+      ),
+      cta: 'View Open Source Wall',
+      scrollId: '#open-source-wall'
     },
     {
       id: 'phone',
       title: 'Available for Projects',
       subtitle: 'Mobile Device',
       icon: <Phone className="w-6 h-6 text-cyan-500" />,
-      info: 'Open for AI agents development, custom dashboards design, Chrome extension modules, and scalable REST backends. Response speed: usually < 24 hours.',
-      cta: 'Send Project Brief',
+      info: (
+        <div className="space-y-3">
+          <span className="text-white font-bold block border-b border-zinc-800 pb-1">Communication Protocol:</span>
+          <p>Ready to orchestrate agentic AI workflows, architect custom SaaS multi-tenant dashboards, and build heavily rate-limited REST pipelines.</p>
+          <div className="text-xs text-cyan-400 mt-2 p-2 bg-cyan-950/30 rounded border border-cyan-900/50">
+            &gt; Email: dhruvvira17@gmail.com<br/>
+            &gt; Phone: +91 9303000832<br/>
+            &gt; Network: Response speed &lt; 24 hours.
+          </div>
+        </div>
+      ),
+      cta: 'Initiate Contact Sequence',
       scrollId: '#connect'
     },
     {
@@ -114,8 +166,18 @@ export function InteractiveDesk({ onInteraction, isCyberMode, onToggleTheme }: I
       title: 'Future Learning Roadmap',
       subtitle: 'Physical Notebook',
       icon: <BookOpen className="w-6 h-6 text-purple-500" />,
-      info: 'Expanding knowledge coordinates. Actively researching LangGraph stateful multi-agent workflows, Model Context Protocol (MCP) servers integration, and Rust systems programming.',
-      cta: 'View Skills Spec',
+      info: (
+        <div className="space-y-3">
+          <span className="text-white font-bold block border-b border-zinc-800 pb-1">Expanding Knowledge Coordinates:</span>
+          <ul className="list-disc pl-4 space-y-1">
+            <li><span className="text-purple-400">Agentic AI:</span> Advanced LangGraph patterns & memory structures.</li>
+            <li><span className="text-purple-400">System Architecture:</span> PostgreSQL internals & Redis caching layers.</li>
+            <li><span className="text-purple-400">Mobile:</span> React Native performance scaling.</li>
+            <li><span className="text-purple-400">Languages:</span> Transitioning into Rust for memory-safe backend components.</li>
+          </ul>
+        </div>
+      ),
+      cta: 'View Deep Specs',
       scrollId: '#specs'
     }
   ]
@@ -226,30 +288,24 @@ export function InteractiveDesk({ onInteraction, isCyberMode, onToggleTheme }: I
               </div>
             </button>
 
-            {/* Coffee Cup Widget (steam animations on hover) */}
+            {/* Trophy Widget */}
             <button
-              onClick={() => handleItemClick('coffee')}
+              onClick={() => handleItemClick('trophy')}
               className={`relative flex flex-col justify-between items-start p-5 bg-black rounded-xl border text-left transition-all overflow-hidden h-40 group ${
-                activeItem === 'coffee' 
-                  ? 'border-yellow-600 bg-yellow-600/5' 
+                activeItem === 'trophy' 
+                  ? 'border-yellow-500 bg-yellow-500/10 shadow-[0_0_15px_rgba(234,179,8,0.15)]' 
                   : 'border-zinc-900 hover:border-zinc-700 bg-zinc-900/10'
               }`}
             >
               <div className="flex justify-between items-center w-full">
                 <div className="relative">
-                  <Coffee className="w-5 h-5 text-zinc-500 group-hover:scale-105 transition-transform" />
-                  {/* Coffee Steam */}
-                  <div className="steam-container opacity-40 group-hover:opacity-100 transition-opacity">
-                    <div className="steam-line" />
-                    <div className="steam-line" />
-                    <div className="steam-line" />
-                  </div>
+                  <Award className="w-5 h-5 text-yellow-500 group-hover:scale-105 transition-transform animate-pulse" />
                 </div>
-                <span className="text-[10px] text-zinc-600 font-mono">DEV_BIO</span>
+                <span className="text-[10px] text-zinc-600 font-mono">ACHIEVEMENTS</span>
               </div>
               <div className="space-y-1">
-                <div className="text-xs text-zinc-500 font-mono">Current Status:</div>
-                <div className="text-sm font-bold text-white tracking-wide">Writing clean code</div>
+                <div className="text-xs text-zinc-500 font-mono">Highest Honor:</div>
+                <div className="text-sm font-bold text-white tracking-wide">1st Place Hackathon</div>
               </div>
             </button>
 
@@ -319,9 +375,9 @@ export function InteractiveDesk({ onInteraction, isCyberMode, onToggleTheme }: I
                           </span>
                         </div>
                       </div>
-                      <p className="text-xs md:text-sm text-zinc-400 font-mono leading-relaxed bg-black/40 p-3 rounded-lg border border-zinc-900">
+                      <div className="text-xs md:text-sm text-zinc-400 font-mono leading-relaxed bg-black/40 p-4 rounded-lg border border-zinc-900 shadow-inner">
                         {data.info}
-                      </p>
+                      </div>
                       <a
                         href={data.scrollId}
                         className="inline-flex items-center gap-1.5 text-xs text-red-500 hover:text-red-400 font-bold font-mono transition-colors"

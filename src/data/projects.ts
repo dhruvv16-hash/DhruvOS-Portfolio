@@ -1,97 +1,103 @@
 export const projects = [
   {
     id: 1,
-    title: "Algorithmic Trading Strategy — ETH/USD",
-    description: "Designed and backtested a multi-timeframe ETH/USD trading strategy combining UT Bot Alerts, Linear Regression, and ADX trend-strength filtering in Pine Script on TradingView. Built a live, interactive HTML dashboard powered by real-time Crypto.com market data to visualize entry/exit signals and strategy performance, iteratively tuning parameters for stronger risk-adjusted returns and controlled drawdown.",
-    tech: ["Pine Script", "TradingView", "Python", "Crypto.com API", "HTML/JS"],
-    features: ["Pine Script strategy indicator", "Crypto.com API market connection", "Linear regression and ADX filtering"],
+    title: "VendorOS — Multi-Tenant Food-Tech SaaS Platform",
+    description: "Built a production POS, Kitchen Display System, and inventory-management PWA to replace a restaurant's paper-and-spreadsheet order flow. Implemented offline-first sync (localStorage queue → Supabase on reconnect) so staff keep taking and fulfilling orders through connectivity drops with zero order loss. Enforced Row-Level Security policies on every Supabase table and automated order intake through the Meta WhatsApp Cloud API.",
+    tech: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "WhatsApp API"],
+    features: ["Offline-first sync", "Row-Level Security", "WhatsApp automated ordering"],
+    link: "https://github.com/dhruvv16-hash/VendorOS",
+    fileName: "syncQueue.ts",
+    codeSnippet: `// Offline-first sync mechanism
+window.addEventListener('online', async () => {
+  const queue = JSON.parse(localStorage.getItem('offlineOrders') || '[]');
+  if (queue.length > 0) {
+    const { data, error } = await supabase.from('orders').insert(queue);
+    if (!error) localStorage.removeItem('offlineOrders');
+  }
+});`,
+  },
+  {
+    id: 2,
+    title: "InvestorGPT — Multi-Agent AI Investment Platform",
+    description: "Architected a 7-agent orchestration pipeline (financial-ingestion, valuation, technical, sentiment, Consensus, and Reviewer agents) that reconciles conflicting buy/sell signals into one research verdict. Implemented quantitative scoring models (Piotroski F-Score, Altman Z-Score, DCF) and an MPT portfolio studio for 500 Efficient Frontier configurations.",
+    tech: ["Next.js", "FastAPI", "Python", "SQLAlchemy", "Agentic AI"],
+    features: ["7-agent orchestration", "Quantitative scoring models", "MPT portfolio simulation"],
+    link: "https://github.com/dhruvv16-hash/InvestorGPT",
+    fileName: "orchestrator.py",
+    codeSnippet: `def consensus_workflow(signals):
+    reviewer = Agent(role="Reviewer", goal="Reconcile buy/sell signals")
+    consensus = reviewer.execute(signals)
+    if consensus.confidence > 0.8:
+        return execute_trade(consensus.action)
+    return request_human_review(consensus)`,
+  },
+  {
+    id: 3,
+    title: "AccidentZero AI — Industrial Safety Risk Monitoring",
+    description: "Built a 5-model ensemble (XGBoost, LightGBM, CatBoost, LSTM, rule engine) that scores real-time accident risk from operational metrics, fused with a computer-vision pipeline for PPE-violation and scene-risk detection. Exposed predictions via FastAPI batch (Excel) and real-time endpoints with Chart.js dashboards.",
+    tech: ["Python", "FastAPI", "XGBoost", "LightGBM", "CatBoost", "LSTM"],
+    features: ["5-model ensemble", "Computer-vision pipeline", "Real-time safety dashboards"],
+    link: "https://github.com/dhruvv16-hash/Accident-0-AI",
+    fileName: "ensemble.py",
+    codeSnippet: `def calculate_risk_score(metrics, cv_flags):
+    preds = [
+        xgb_model.predict(metrics),
+        lgb_model.predict(metrics),
+        cat_model.predict(metrics)
+    ]
+    ensemble_score = np.mean(preds)
+    if cv_flags.get('no_ppe'):
+        ensemble_score *= 1.5 # Apply risk multiplier
+    return ensemble_score`,
+  },
+  {
+    id: 4,
+    title: "DeltaBridge — Algorithmic Trading Bot (ETH/USD)",
+    description: "Designed a multi-timeframe strategy (UT Bot Alerts + Linear Regression + ADX trend-strength filtering) to suppress false entries in choppy price action. Built a production Flask bridge from TradingView alerts to Delta Exchange for 24/7 automated execution, secured with HMAC-SHA256 signed requests.",
+    tech: ["Pine Script", "Python", "Flask", "SQLite", "Crypto APIs"],
+    features: ["Multi-timeframe strategy", "24/7 automated execution", "HMAC-SHA256 security"],
     link: "https://github.com/dhruvv16-hash/DeltaBridge",
     fileName: "strategy.pine",
     codeSnippet: `//@version=5
 strategy("ETH/USD Trend Following", overlay=true)
 src = close
-// UT Bot Signals & ADX trend filtering
-keyValue = input.float(3.0, "Key Value")
-atrPeriod = input.int(10, "ATR Period")
-xATR = ta.atr(atrPeriod)
-nLoss = keyValue * xATR
 lr = ta.linreg(src, 14, 0)
 [diplus, diminus, adx] = ta.dmi(14, 14)
 buySignal = ta.crossover(src, lr) and adx > 25
 if (buySignal)
-    strategy.entry("Long Entry", strategy.long)`,
-  },
-  {
-    id: 2,
-    title: "AI Email Writer — Chrome Extension",
-    description: "Built a Chrome Extension that injects an AI-powered \"AI Reply\" button into Gmail's UI using DOM mutation observers. Integrated with a Spring Boot REST API and Google Gemini AI to generate contextual, tone-aware email replies in real time.",
-    tech: ["JavaScript", "Spring Boot", "Gemini AI API", "Chrome Extension API"],
-    features: ["Gmail UI integration", "Spring Boot API gateway", "Gemini AI reply generation"],
-    link: "https://github.com/dhruvv16-hash/EMAIL_WRITER-AI",
-    fileName: "content.js",
-    codeSnippet: `// Chrome Extension Content Script
-const observer = new MutationObserver((mutations) => {
-  const replyBoxes = document.querySelectorAll('.Am.Al.editable');
-  replyBoxes.forEach((box) => {
-    if (!box.parentNode.querySelector('.ai-reply-btn')) {
-      const btn = document.createElement('button');
-      btn.className = 'ai-reply-btn px-3 py-1 bg-red-600 text-white rounded-md';
-      btn.innerText = 'AI Reply';
-      btn.onclick = () => generateReply(box);
-      box.parentNode.appendChild(btn);
-    }
-  });
-});
-observer.observe(document.body, { childList: true, subtree: true });`,
-  },
-  {
-    id: 3,
-    title: "Movie Recommendation System",
-    description: "Built a content-based movie recommendation system using TF-IDF vectorization and cosine similarity to suggest similar movies. Processed and analyzed movie metadata to generate top-5 personalized recommendations based on text similarity. Deployed the model as an interactive Streamlit web app, enabling real-time user input and recommendations.",
-    tech: ["Python", "ML", "Streamlit", "TF-IDF"],
-    features: ["TF-IDF vectorization", "Cosine similarity matching", "Streamlit deployment"],
-    link: "https://github.com/dhruvv16-hash/Movie-Recommondation",
-    fileName: "recommender.py",
-    codeSnippet: `def recommend_movies(title, cosine_sim, df):
-    idx = indices[title]
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:6]
-    movie_indices = [i[0] for i in sim_scores]
-    return df['title'].iloc[movie_indices]`,
-  },
-  {
-    id: 4,
-    title: "Library Management System",
-    description: "Designed and implemented an object-oriented library management system to handle book inventory, issue, and return workflows. Applied file handling to persist data, reducing manual record lookup time by ~60% during simulations. Structured the system using modular classes, improving code maintainability and scalability.",
-    tech: ["C++", "OOPS", "File Handling"],
-    features: ["Modular class design", "File-based storage", "Issue/return workflows"],
-    link: "https://github.com/dhruvv16-hash",
-    fileName: "library.cpp",
-    codeSnippet: `class Library {
-  private:
-    vector<Book> books;
-    vector<Member> members;
-  public:
-    void addBook(Book b);
-    void issueBook(int bookId, int memberId);
-    void returnBook(int bookId);
-};`,
+    strategy.entry("Long", strategy.long)`,
   },
   {
     id: 5,
-    title: "Password Strength Checker",
-    description: "Built a password evaluation tool using regex, entropy calculation, and rule-based validation to identify weak credentials. Improved weak-password detection accuracy by ~40% across test cases by combining multiple validation rules. Provided real-time feedback to users, increasing password compliance and security awareness.",
-    tech: ["Python", "Regex", "Security"],
-    features: ["Entropy calculation", "Real-time feedback", "Rule-based validation"],
-    link: "https://github.com/dhruvv16-hash",
-    fileName: "checker.py",
-    codeSnippet: `def check_strength(password):
-    entropy = calculate_entropy(password)
-    has_upper = bool(re.search(r'[A-Z]', password))
-    has_lower = bool(re.search(r'[a-z]', password))
-    has_digit = bool(re.search(r'\\d', password))
-    has_special = bool(re.search(r'[!@#$%^&*]', password))
-    return calculate_score(entropy, [has_upper, has_lower, has_digit, has_special])`,
+    title: "OpenBB — Open Source Contribution",
+    description: "Merged a pull request resolving Poetry packaging conflicts between core modules for the OpenBB terminal. This eliminated installation failures on OS package managers with strict file ownership, directly contributing to one of the leading open-source financial platforms.",
+    tech: ["Python", "Poetry", "Open Source", "Finance"],
+    features: ["Package management fix", "Dependency resolution", "Core module stability"],
+    link: "https://github.com/dhruvv16-hash/OpenBB",
+    fileName: "pyproject.toml",
+    codeSnippet: `[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+numpy = "^1.24.0"
+# Resolved conflicting version constraints
+pandas = ">=1.5.0,<3.0.0"`,
   },
-]
+  {
+    id: 6,
+    title: "Supabase — Open Source Contribution",
+    description: "Diagnosed PostgreSQL privilege-leak and DNS-outage issues for Supabase. Built automated diagnostic suites and SQL reconciliation scripts to speed up platform-team triage and ensure database consistency across instances.",
+    tech: ["TypeScript", "PostgreSQL", "SQL", "Diagnostics"],
+    features: ["Privilege-leak patching", "DNS outage diagnostics", "Automated SQL reconciliation"],
+    link: "https://github.com/dhruvv16-hash/supabase",
+    fileName: "diagnostics.sql",
+    codeSnippet: `-- SQL Reconciliation Script
+DO $$
+DECLARE
+  leaked_role record;
+BEGIN
+  FOR leaked_role IN SELECT rolname FROM pg_roles WHERE rolsuper = true LOOP
+    RAISE NOTICE 'Admin role found: %', leaked_role.rolname;
+  END LOOP;
+END;
+$$;`,
+  }
+];
