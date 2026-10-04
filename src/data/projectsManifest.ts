@@ -83,8 +83,8 @@ export const projectsManifest = {
       status: "Active",
       shortDescription: "Multi-tenant POS and SaaS platform.",
       description: "Multi-Tenant Food-Tech SaaS Platform with offline-first sync (localStorage queue → Supabase). Automated order intake through WhatsApp Cloud API and secured with HMAC.",
-      thumbnail: "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/main/public/screenshots/readme/02_home_dashboard.png",
-      heroImage: "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/main/public/screenshots/readme/home_desktop.png",
+      thumbnail: "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/master/public/screenshots/readme/02_home_dashboard.png",
+      heroImage: "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/master/public/screenshots/readme/home_desktop.png",
       tech: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL"],
       features: [
         "Offline-first sync",
@@ -103,9 +103,9 @@ export const projectsManifest = {
         "Integrated secure webhooks for Razorpay and WhatsApp, protected by SHA-256 HMAC signature validation."
       ],
       screenshots: [
-        "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/main/public/screenshots/readme/01_auth_login.png",
-        "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/main/public/screenshots/readme/04_orders_view.png",
-        "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/main/public/screenshots/readme/09_analytics_charts.png"
+        "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/master/public/screenshots/readme/01_auth_login.png",
+        "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/master/public/screenshots/readme/04_orders_view.png",
+        "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/master/public/screenshots/readme/09_analytics_charts.png"
       ],
       link: "https://github.com/dhruvv16-hash/VendorOS",
       demoUrl: "https://vendoros.in"
