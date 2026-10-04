@@ -108,7 +108,7 @@ export const projectsManifest = {
         "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/master/public/screenshots/readme/09_analytics_charts.png"
       ],
       link: "https://github.com/dhruvv16-hash/VendorOS",
-      demoUrl: "https://vendoros.in"
+      demoUrl: "https://dhruvv.is-a.dev/projects/vendoros/app"
     },
     {
       id: "investorgpt",
