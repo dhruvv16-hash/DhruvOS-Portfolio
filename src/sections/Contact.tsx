@@ -57,6 +57,7 @@ export function Contact({ onFormSubmitted }: ContactProps) {
     setIsSubmitting(true)
 
     try {
+      // 1. Try AJAX submission
       const response = await fetch('https://formsubmit.co/ajax/dhruvvira17@gmail.com', {
         method: 'POST',
         headers: {
@@ -72,21 +73,54 @@ export function Contact({ onFormSubmitted }: ContactProps) {
         })
       })
 
-      if (response.ok) {
+      const data = await response.json().catch(() => null)
+
+      if (response.ok && data && data.success === "true") {
         toast.success('Briefing dispatched! Email sent successfully.')
       } else {
-        throw new Error('FormSubmit AJAX failed')
+        // FormSubmit likely needs activation or blocked the AJAX. 
+        console.warn('FormSubmit AJAX failed or requires activation. Data:', data)
+        throw new Error('FormSubmit Activation Required or Failed')
       }
     } catch (error) {
       console.error('Submission error:', error)
-      window.location.href = `mailto:dhruvvira17@gmail.com?subject=Briefing%20from%20${encodeURIComponent(formData.name)}&body=Name:%20${encodeURIComponent(formData.name)}%0AEmail:%20${encodeURIComponent(formData.email)}%0A%0AMessage:%0A${encodeURIComponent(formData.message)}`
-      toast.info('Opened mail client to send briefing as fallback.')
-    } finally {
-      setIsSubmitting(false)
-      setFormData({ name: '', email: '', message: '' })
-      setStep(1)
-      onFormSubmitted()
+      
+      // 2. Fallback to standard form POST (needed for first-time FormSubmit activation)
+      // We will do a standard POST in the current window so it doesn't get blocked by popups.
+      toast.info('Redirecting to secure mail dispatch...')
+      
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = 'https://formsubmit.co/dhruvvira17@gmail.com'
+      // No target="_blank" to avoid popup blockers
+      
+      const fields: Record<string, string> = {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        _subject: `New Portfolio Briefing from ${formData.name}`,
+        _next: window.location.href // Redirect back to portfolio after submission
+      }
+
+      for (const [key, value] of Object.entries(fields)) {
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = key
+        input.value = value
+        form.appendChild(input)
+      }
+
+      document.body.appendChild(form)
+      form.submit()
+      
+      // Note: We don't remove the form or clear state here because the page is navigating away.
+      return 
     }
+    
+    setIsSubmitting(false)
+    setFormData({ name: '', email: '', message: '' })
+    setStep(1)
+    onFormSubmitted()
   }
 
   const contactInfo = [
