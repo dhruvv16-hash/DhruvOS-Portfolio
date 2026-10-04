@@ -1,4 +1,10 @@
-export interface ProjectModule {
+﻿import re
+
+with open("src/data/projectsManifest.ts", "r", encoding="utf-8") as f:
+    content = f.read()
+
+# I will just write a new file content and replace the whole file since it's easier to maintain the exact types.
+new_content = """export interface ProjectModule {
   id: string;
   slug: string;
   type: 'personal' | 'open-source';
@@ -82,7 +88,7 @@ export const projectsManifest = {
       title: "VendorOS",
       status: "Active",
       shortDescription: "Multi-tenant POS and SaaS platform.",
-      description: "Multi-Tenant Food-Tech SaaS Platform with offline-first sync (localStorage queue → Supabase). Automated order intake through WhatsApp Cloud API and secured with HMAC.",
+      description: "Multi-Tenant Food-Tech SaaS Platform with offline-first sync (localStorage queue \u2192 Supabase). Automated order intake through WhatsApp Cloud API and secured with HMAC.",
       thumbnail: "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/main/public/screenshots/readme/02_home_dashboard.png",
       heroImage: "https://raw.githubusercontent.com/dhruvv16-hash/VendorOS/main/public/screenshots/readme/home_desktop.png",
       tech: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL"],
@@ -521,3 +527,11 @@ export const projectsManifest = {
     }
   ] as WhyDhruvNode[]
 };
+"""
+
+# Replace the text from `export interface ProjectModule` to the end of the file
+# (or just write it directly since we are reconstructing it perfectly)
+with open("src/data/projectsManifest.ts", "w", encoding="utf-8") as f:
+    f.write(new_content)
+
+print("Updated projectsManifest.ts successfully")

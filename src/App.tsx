@@ -15,6 +15,8 @@ const ClientSolutions = React.lazy(() => import('./sections/ClientSolutions').th
 const JourneyTimeline = React.lazy(() => import('./sections/JourneyTimeline').then(m => ({ default: m.JourneyTimeline })))
 const OpenSourceWall = React.lazy(() => import('./sections/OpenSourceWall').then(m => ({ default: m.OpenSourceWall })))
 const EngineeringPrinciples = React.lazy(() => import('./sections/EngineeringPrinciples').then(m => ({ default: m.EngineeringPrinciples })))
+const ProjectsLanding = React.lazy(() => import('./sections/ProjectsLanding').then(m => ({ default: m.ProjectsLanding })))
+const ProjectDetail = React.lazy(() => import('./sections/ProjectDetail').then(m => ({ default: m.ProjectDetail })))
 import { CommandPalette } from './components/CommandPalette'
 import { TelemetryStats } from './components/TelemetryStats'
 import type { TelemetryLogs } from './components/TelemetryStats'
@@ -428,7 +430,7 @@ function App() {
               <section id="projects" className="space-y-6">
                 <h2 className="text-xl font-bold text-white border-b border-zinc-900 pb-3">KEY PROJECTS</h2>
                 <div className="space-y-10">
-                  {projectsManifest.projects.filter(p => !['openbb', 'supabase-os'].includes(p.id)).map(proj => (
+                  {projectsManifest.projects.filter(p => p.type === 'personal').map(proj => (
                     <div key={proj.id} className="space-y-3">
                       <div className="flex items-center gap-3">
                         <h3 className="text-lg font-bold text-white">{proj.title}</h3>
@@ -490,7 +492,17 @@ function App() {
         ) : (
           <main className="pt-28">
             <Routes>
-              <Route path="/" element={
+                <Route path="/projects" element={
+                  <Suspense fallback={<div className="py-12 bg-black text-center text-xs text-zinc-650">Loading...</div>}>
+                    <ProjectsLanding />
+                  </Suspense>
+                } />
+                <Route path="/projects/:slug" element={
+                  <Suspense fallback={<div className="py-12 bg-black text-center text-xs text-zinc-650">Loading...</div>}>
+                    <ProjectDetail />
+                  </Suspense>
+                } />
+                <Route path="/" element={
                 <>
                   <Hero
                     onExplore={() => navigate('/concierge')}

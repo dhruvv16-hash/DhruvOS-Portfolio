@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 const navItems = [
   { name: 'Concierge', href: '/concierge' },
   { name: 'Workspace', href: '/workspace' },
+  { name: 'Projects', href: '/projects' },
   { name: 'Sandbox Lab', href: '/sandbox-lab' },
   { name: 'Build Logs', href: '/build-logs' },
   { name: 'Tech Specs', href: '/tech-specs' },
