@@ -3,6 +3,18 @@
   publish = "dist"
 
 [[redirects]]
+  from = "/projects/vendoros/app/*"
+  to = "https://vendor-os-ebon.vercel.app/projects/vendoros/app/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/projects/vendoros/app"
+  to = "https://vendor-os-ebon.vercel.app/projects/vendoros/app"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
