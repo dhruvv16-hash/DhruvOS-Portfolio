@@ -118,7 +118,7 @@ export const projectsManifest = {
       status: "Completed",
       shortDescription: "7-agent orchestration pipeline for financial research.",
       description: "7-agent orchestration pipeline (financial-ingestion, valuation, technical, sentiment) reconciling signals into one verdict. Implemented quantitative scoring models (Piotroski F-Score).",
-      thumbnail: "https://raw.githubusercontent.com/dhruvv16-hash/InvestorGPT/main/docs/assets/screener_dashboard.png",
+      thumbnail: '/images/projects/investorgpt_thumb.png',
       heroImage: "https://raw.githubusercontent.com/dhruvv16-hash/InvestorGPT/main/docs/assets/portfolio_dashboard.png",
       tech: ["Next.js", "FastAPI", "Python", "SQLAlchemy", "Agentic AI"],
       features: [
@@ -186,7 +186,7 @@ export const projectsManifest = {
       status: "Active",
       shortDescription: "Algorithmic Trading Bot for ETH/USD execution.",
       description: "Algorithmic Trading Bot (ETH/USD). Multi-timeframe strategy suppressing false entries. Flask bridge from TradingView to Delta Exchange for 24/7 automated execution.",
-      thumbnail: "https://raw.githubusercontent.com/dhruvv16-hash/DeltaBridge/main/screenshots/dashboard_analytics.jpg",
+      thumbnail: '/images/projects/deltabridge_thumb.png',
       heroImage: "https://raw.githubusercontent.com/dhruvv16-hash/DeltaBridge/main/screenshots/dashboard_accounts.jpg",
       tech: ["Pine Script", "Python", "Flask", "Crypto APIs", "SQLite"],
       features: [
@@ -236,7 +236,7 @@ export const projectsManifest = {
       status: "Completed",
       shortDescription: "Context-aware email generation via browser extension.",
       description: "A Chrome extension integrating directly with Gmail. Composes context-aware replies using Google's Gemini AI with configurable tones and length parameters.",
-      thumbnail: "https://raw.githubusercontent.com/dhruvv16-hash/EMAIL_WRITER-AI/main/preview/gmail-ai-reply-button.png",
+      thumbnail: '/images/projects/ai_email_thumb.png',
       heroImage: "https://raw.githubusercontent.com/dhruvv16-hash/EMAIL_WRITER-AI/main/preview/email-generator-ui.png",
       tech: ["JavaScript", "Chrome Extensions", "Gemini API", "HTML/CSS"],
       features: [
