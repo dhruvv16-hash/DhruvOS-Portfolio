@@ -20,7 +20,7 @@ import { TelemetryStats } from './components/TelemetryStats'
 import type { TelemetryLogs } from './components/TelemetryStats'
 import { projectsManifest } from './data/projectsManifest'
 import { Toaster, toast } from 'sonner'
-import { Download, ExternalLink } from 'lucide-react'
+import { Download, Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
 
 function App() {
   const navigate = useNavigate()
@@ -276,16 +276,18 @@ function App() {
     <>
       <Toaster richColors position="bottom-right" />
       
-      {/* Top Header Live Stats HUD */}
-      <LiveHUD
-        explorationProgress={progress}
-        isRecruiterMode={isRecruiterMode}
-        onToggleRecruiterMode={toggleRecruiterMode}
-        onOpenPalette={() => setIsPaletteOpen(true)}
-        onOpenTelemetry={() => setIsTelemetryOpen(true)}
-      />
-
-      <Navbar onOpenPalette={() => setIsPaletteOpen(true)} />
+      {!isRecruiterMode && (
+        <>
+          <LiveHUD
+            explorationProgress={progress}
+            isRecruiterMode={isRecruiterMode}
+            onToggleRecruiterMode={toggleRecruiterMode}
+            onOpenPalette={() => setIsPaletteOpen(true)}
+            onOpenTelemetry={() => setIsTelemetryOpen(true)}
+          />
+          <Navbar onOpenPalette={() => setIsPaletteOpen(true)} />
+        </>
+      )}
 
       {/* Global Command Palette search dialog */}
       <CommandPalette
@@ -302,126 +304,188 @@ function App() {
         onDownloadReport={printSessionReport}
       />
 
-      <div className={`min-h-screen bg-black transition-all ${isCyberMode ? 'cyber-hud' : ''}`}>
+      <div className={`min-h-screen bg-black transition-all ${isCyberMode && !isRecruiterMode ? 'cyber-hud' : ''}`}>
         
-        {/* Recruiter Mode view swap */}
         {isRecruiterMode ? (
-          <div className="pt-32 pb-24 max-w-4xl mx-auto px-4 space-y-16 font-mono text-zinc-300">
-            
-            {/* ATS Header Bio */}
-            <div className="border-b border-zinc-900 pb-8 space-y-3">
-              <h1 className="text-4xl font-bold text-white uppercase font-sans">Dhruv Vira</h1>
-              <p className="text-red-500 font-bold tracking-wider text-xs">AI ENGINEER & BACKEND DEVELOPER</p>
-              <p className="text-sm text-zinc-400 leading-relaxed font-sans">
-                Computer Science Undergrad at VIT Chennai. Specialized in multi-agent LLM systems, REST service caching, and quantitative ETH/USD indicator backtests. Active contributor to omegaUp open source platforms.
-              </p>
+          <div className="bg-black min-h-screen font-sans text-zinc-300">
+            {/* 1. MINIMAL HEADER */}
+            <div className="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-zinc-900 px-4 py-4">
+              <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="text-xl font-bold text-white font-mono tracking-wider">
+                  DHRUV_OS<span className="text-red-500">.</span>
+                </div>
+                <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold tracking-wide text-zinc-400">
+                  <a href="#about" className="hover:text-white transition-colors">About</a>
+                  <a href="#projects" className="hover:text-white transition-colors">Projects</a>
+                  <a href="#opensource" className="hover:text-white transition-colors">Open Source</a>
+                  <a href="/Dhruv_Vira_Resume.pdf" download onClick={trackResumeDownloaded} className="hover:text-white transition-colors">Resume</a>
+                  <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+                </div>
+                <button
+                  onClick={toggleRecruiterMode}
+                  className="flex items-center gap-2 px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold rounded border border-zinc-800 transition-colors"
+                >
+                  Exit Recruiter Mode <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="max-w-4xl mx-auto px-4 pt-16 pb-24 space-y-20">
               
-              <div className="pt-4 flex flex-wrap gap-4 select-none">
-                <a
-                  href="/Dhruv_Vira_Resume.pdf"
-                  download="Dhruv_Vira_Resume.pdf"
-                  onClick={trackResumeDownloaded}
-                  className="px-4 py-2 bg-white hover:bg-zinc-200 text-black text-xs font-semibold rounded flex items-center gap-1.5 font-sans"
-                >
-                  <Download className="w-3.5 h-3.5" /> Download Resume (PDF)
-                </a>
-                <a
-                  href="https://github.com/dhruvv16-hash"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 text-zinc-300 text-xs rounded flex items-center gap-1.5"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" /> Github profile
-                </a>
-              </div>
-            </div>
+              {/* 2. HERO */}
+              <section id="about" className="space-y-6">
+                <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight">DHRUV VIRA</h1>
+                <p className="text-red-500 font-bold tracking-widest text-sm uppercase">AI SYSTEMS & BACKEND ENGINEER</p>
+                <div className="text-base text-zinc-400 leading-relaxed max-w-2xl space-y-4">
+                  <p>B.Tech CSE @ VIT Chennai.</p>
+                  <p>Building multi-agent AI systems, backend infrastructure, and quantitative trading systems. Active open-source contributor.</p>
+                </div>
+                <div className="pt-2 flex flex-wrap gap-4">
+                  <a
+                    href="/Dhruv_Vira_Resume.pdf"
+                    download="Dhruv_Vira_Resume.pdf"
+                    onClick={trackResumeDownloaded}
+                    className="px-5 py-2.5 bg-white hover:bg-zinc-200 text-black text-sm font-bold rounded flex items-center gap-2 transition-colors"
+                  >
+                    <Download className="w-4 h-4" /> Download Resume
+                  </a>
+                  <a
+                    href="https://github.com/dhruvv16-hash"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-2.5 border border-zinc-800 hover:border-zinc-600 hover:text-white text-zinc-300 text-sm font-semibold rounded flex items-center gap-2 transition-colors"
+                  >
+                    <Github className="w-4 h-4" /> GitHub
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/dhruv-vira-33bb19439"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-2.5 border border-zinc-800 hover:border-zinc-600 hover:text-white text-zinc-300 text-sm font-semibold rounded flex items-center gap-2 transition-colors"
+                  >
+                    <Linkedin className="w-4 h-4" /> LinkedIn
+                  </a>
+                </div>
+              </section>
 
-            {/* ATS Skills inventory */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold text-white border-b border-zinc-900 pb-2">TECHNICAL SPECS</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
-                <div>
-                  <span className="text-red-500 font-bold block mb-2">Expert (Fluent):</span>
-                  <div className="flex flex-col gap-1.5 text-zinc-400">
-                    {projectsManifest.skills.filter(s => s.level === 'Expert').map(s => (
-                      <span key={s.name}>• {s.name}</span>
-                    ))}
+              {/* 3. TECHNICAL STACK */}
+              <section className="space-y-6">
+                <h2 className="text-xl font-bold text-white border-b border-zinc-900 pb-3">TECHNICAL STACK</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+                  <div>
+                    <h3 className="text-white font-bold mb-2">AI / ML</h3>
+                    <p className="text-zinc-400">Python &middot; XGBoost &middot; LLMs &middot; RAG &middot; Agentic AI</p>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold mb-2">BACKEND</h3>
+                    <p className="text-zinc-400">FastAPI &middot; PostgreSQL &middot; Supabase &middot; Spring Boot &middot; REST APIs</p>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold mb-2">FRONTEND</h3>
+                    <p className="text-zinc-400">Next.js &middot; React &middot; TypeScript &middot; Tailwind</p>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold mb-2">SYSTEMS</h3>
+                    <p className="text-zinc-400">C++ &middot; Java &middot; Docker &middot; Kubernetes</p>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold mb-2">QUANT / FINANCE</h3>
+                    <p className="text-zinc-400">Python &middot; Pine Script &middot; Backtesting &middot; Market Data</p>
                   </div>
                 </div>
-                <div>
-                  <span className="text-zinc-300 font-bold block mb-2">Advanced:</span>
-                  <div className="flex flex-col gap-1.5 text-zinc-500">
-                    {projectsManifest.skills.filter(s => s.level === 'Advanced').map(s => (
-                      <span key={s.name}>• {s.name}</span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-zinc-500 font-bold block mb-2">Learning:</span>
-                  <div className="flex flex-col gap-1.5 text-zinc-655">
-                    {projectsManifest.skills.filter(s => s.level === 'Learning').map(s => (
-                      <span key={s.name}>• {s.name}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+              </section>
 
-            {/* ATS Experience Timeline */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-bold text-white border-b border-zinc-900 pb-2">CHRONOLOGICAL BACKGROUND</h3>
-              <div className="space-y-6 text-xs">
-                {projectsManifest.experienceList.map((exp, i) => (
-                  <div key={i} className="space-y-2">
-                    <div className="flex justify-between font-bold text-white">
-                      <span>{exp.title}</span>
-                      <span className="text-red-500">{exp.period}</span>
+              {/* 4. EXPERIENCE / BACKGROUND */}
+              <section className="space-y-6">
+                <h2 className="text-xl font-bold text-white border-b border-zinc-900 pb-3">EXPERIENCE / BACKGROUND</h2>
+                <div className="space-y-8">
+                  <div>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-1 mb-2">
+                      <h3 className="text-base font-bold text-white">Open Source & Competitive Engineering</h3>
+                      <span className="text-zinc-500 text-sm font-mono">2024 &mdash; Present</span>
                     </div>
-                    <span className="text-zinc-500 block text-xxs uppercase tracking-wider">{exp.subtitle}</span>
-                    <ul className="space-y-1.5 text-zinc-400 list-disc pl-5 font-sans text-sm leading-relaxed">
-                      {exp.details.map((bullet, bIdx) => (
-                        <li key={bIdx}>{bullet}</li>
-                      ))}
+                    <ul className="space-y-2 text-sm text-zinc-400 list-disc pl-5">
+                      <li>iQOO Hackathon Winner</li>
+                      <li>Open-source contributions across Supabase, omegaup, Kubernetes, OpenBB</li>
+                      <li>Active in algorithmic problem solving and competitive coding</li>
                     </ul>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ATS Projects details */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-bold text-white border-b border-zinc-900 pb-2">KEY DEVELOPMENTS</h3>
-              <div className="space-y-6 text-xs">
-                {projectsManifest.projects.map((proj) => (
-                  <div key={proj.id} className="space-y-2">
-                    <div className="flex justify-between font-bold text-white">
-                      <span>{proj.title}</span>
-                      <a href={proj.link} className="text-red-500 hover:underline">Codebase</a>
+                  
+                  <div>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-1 mb-2">
+                      <h3 className="text-base font-bold text-white">B.Tech Computer Science & Engineering</h3>
+                      <span className="text-zinc-500 text-sm font-mono">2024 &mdash; 2028</span>
                     </div>
-                    <p className="text-zinc-500 leading-relaxed font-sans text-sm">{proj.description}</p>
-                    <div className="flex flex-wrap gap-2 pt-1.5">
-                      {proj.tech.map(t => (
-                        <span key={t} className="px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-zinc-500 rounded text-xxs">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="text-sm text-zinc-400">VIT Chennai</p>
+                    <ul className="space-y-2 text-sm text-zinc-400 list-disc pl-5 mt-2">
+                      <li>Core coursework: Data Structures & Algorithms, Object-Oriented Programming (C++/Java)</li>
+                    </ul>
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
+              </section>
 
-            {/* ATS Connect details */}
-            <div className="border-t border-zinc-900 pt-8 text-center text-xs space-y-4">
-              <p>For immediate opportunities: dhruvvira17@gmail.com | +91 9303000832</p>
-              <button
-                onClick={toggleRecruiterMode}
-                className="px-4 py-2 border border-red-500/30 hover:border-red-500 text-red-500 rounded bg-red-950/10 font-bold"
-              >
-                Return to DhruvOS Dashboard
-              </button>
-            </div>
+              {/* 5. KEY PROJECTS */}
+              <section id="projects" className="space-y-6">
+                <h2 className="text-xl font-bold text-white border-b border-zinc-900 pb-3">KEY PROJECTS</h2>
+                <div className="space-y-10">
+                  {projectsManifest.projects.map(proj => (
+                    <div key={proj.id} className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-lg font-bold text-white">{proj.title}</h3>
+                        <a href={proj.link} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-zinc-500 hover:text-white flex items-center gap-1 transition-colors">
+                          GitHub <ArrowRight className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <p className="text-sm text-zinc-400 leading-relaxed max-w-3xl">{proj.description}</p>
+                      <div className="text-xs text-zinc-500 font-mono">
+                        <span className="font-bold text-zinc-400">Stack:</span> {proj.tech.join(' · ')}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
 
+              {/* 6. OPEN SOURCE */}
+              <section id="opensource" className="space-y-6">
+                <h2 className="text-xl font-bold text-white border-b border-zinc-900 pb-3">OPEN SOURCE</h2>
+                <div className="space-y-8">
+                  {projectsManifest.openSourceTimeline.map((pr, idx) => (
+                    <div key={idx} className="space-y-2">
+                      <h3 className="text-base font-bold text-white">{pr.repo}</h3>
+                      <p className="text-sm text-zinc-400 leading-relaxed">{pr.details}</p>
+                      <a href={pr.link} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-zinc-500 hover:text-white flex items-center gap-1 transition-colors pt-1">
+                        View PR <ArrowRight className="w-3 h-3" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* 7. CONTACT & 8. FOOTER */}
+              <section id="contact" className="pt-12 border-t border-zinc-900">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                  <div className="space-y-2">
+                    <h2 className="text-lg font-bold text-white">DHRUV VIRA</h2>
+                    <p className="text-sm text-zinc-500">AI Systems &middot; Backend &middot; Quant</p>
+                  </div>
+                  <div className="flex flex-wrap gap-6 text-sm font-semibold">
+                    <a href="https://github.com/dhruvv16-hash" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white flex items-center gap-2 transition-colors">
+                      <Github className="w-4 h-4" /> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/dhruv-vira-33bb19439" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white flex items-center gap-2 transition-colors">
+                      <Linkedin className="w-4 h-4" /> LinkedIn
+                    </a>
+                    <a href="mailto:dhruvvira17@gmail.com" className="text-zinc-400 hover:text-white flex items-center gap-2 transition-colors">
+                      <Mail className="w-4 h-4" /> Email
+                    </a>
+                  </div>
+                </div>
+                <div className="mt-16 text-center text-xs text-zinc-600">
+                  &copy; 2026 Dhruv Vira
+                </div>
+              </section>
+
+            </div>
           </div>
         ) : (
           <main className="pt-28">
