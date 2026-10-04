@@ -54,7 +54,7 @@ export function ProjectDetail() {
             <img 
               src={project.heroImage || project.thumbnail} 
               alt={`${project.title} Hero`} 
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-top"
             />
           ) : (
             <div className="w-full h-full bg-zinc-950 flex flex-col items-center justify-center font-mono text-center p-8 space-y-6">
