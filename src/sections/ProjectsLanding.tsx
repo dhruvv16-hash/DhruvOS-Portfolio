@@ -34,8 +34,14 @@ export function ProjectsLanding() {
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="w-full h-full bg-zinc-900 flex items-center justify-center text-zinc-700 font-mono text-sm">
-                    No visual output available
+                  <div className="w-full h-full bg-zinc-950 flex flex-col items-center justify-center font-mono text-center p-6 space-y-4 border-b border-zinc-900">
+                    <div className="text-white font-bold text-xl tracking-widest">{project.title}</div>
+                    <div className="text-red-500 text-xs font-bold tracking-widest uppercase">TradingView Strategy Scanner</div>
+                    <div className="flex gap-4 text-xs text-zinc-500">
+                      <span className="flex flex-col items-center"><span className="text-zinc-300">Browser</span> Automation</span>
+                      <span className="flex flex-col items-center"><span className="text-zinc-300">Strategy</span> Extraction</span>
+                      <span className="flex flex-col items-center"><span className="text-zinc-300">Multi</span> Timeframe</span>
+                    </div>
                   </div>
                 )}
                 {project.status && (

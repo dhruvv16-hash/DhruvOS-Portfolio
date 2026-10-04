@@ -48,16 +48,27 @@ export function ProjectDetail() {
           </div>
         </header>
 
-        {/* Hero Image */}
-        {(project.heroImage || project.thumbnail) && (
-          <div className="w-full aspect-video md:aspect-[21/9] rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 mb-20 shadow-2xl shadow-black/50">
+        {/* Hero Image / Fallback */}
+        <div className="w-full aspect-video md:aspect-[21/9] rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 mb-20 shadow-2xl shadow-black/50">
+          {(project.heroImage || project.thumbnail) ? (
             <img 
               src={project.heroImage || project.thumbnail} 
               alt={`${project.title} Hero`} 
               className="w-full h-full object-cover object-top"
             />
-          </div>
-        )}
+          ) : (
+            <div className="w-full h-full bg-zinc-950 flex flex-col items-center justify-center font-mono text-center p-8 space-y-6">
+              <div className="text-white font-bold text-3xl md:text-5xl tracking-widest">{project.title}</div>
+              <div className="text-red-500 text-sm md:text-base font-bold tracking-widest uppercase">TradingView Strategy Scanner</div>
+              <div className="flex flex-wrap justify-center gap-8 text-xs md:text-sm text-zinc-500 mt-4">
+                <span className="flex flex-col items-center gap-1"><span className="text-zinc-300 font-bold">Browser</span> Automation</span>
+                <span className="flex flex-col items-center gap-1"><span className="text-zinc-300 font-bold">Strategy</span> Extraction</span>
+                <span className="flex flex-col items-center gap-1"><span className="text-zinc-300 font-bold">Multi</span> Timeframe</span>
+                <span className="flex flex-col items-center gap-1"><span className="text-zinc-300 font-bold">NSE</span> Universe</span>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Two Column Layout for Details */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
