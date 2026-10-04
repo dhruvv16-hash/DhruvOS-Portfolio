@@ -428,7 +428,7 @@ function App() {
               <section id="projects" className="space-y-6">
                 <h2 className="text-xl font-bold text-white border-b border-zinc-900 pb-3">KEY PROJECTS</h2>
                 <div className="space-y-10">
-                  {projectsManifest.projects.map(proj => (
+                  {projectsManifest.projects.filter(p => !['openbb', 'supabase-os'].includes(p.id)).map(proj => (
                     <div key={proj.id} className="space-y-3">
                       <div className="flex items-center gap-3">
                         <h3 className="text-lg font-bold text-white">{proj.title}</h3>
